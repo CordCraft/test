@@ -12,85 +12,85 @@ var deviceCtrl = require('../controller/device');
 var auth = require('../auth');
 
 
-deviceApp.get('/', deviceCtrl.findAll, auth.validateAdminAccess);
+deviceApp.get('/', deviceCtrl.findAll);
 
 
-deviceApp.get('/by/userId', deviceCtrl.findByUserId, auth.validateAdminAccess);
+deviceApp.get('/by/userId', deviceCtrl.findByUserId);
 
 
-deviceApp.get('/by/userIds', deviceCtrl.findByUserIds, auth.validateAdminAccess);
+deviceApp.get('/by/userIds', deviceCtrl.findByUserIds);
 
 
-deviceApp.get('/proximity', deviceCtrl.findProximity, auth.validatePublicAccess);
+deviceApp.get('/all/proximity', deviceCtrl.findAllProximity);
 
 
-deviceApp.get('/proximity/zero', deviceCtrl.findProximityZero, auth.validatePublicAccess);
+deviceApp.get('/all/proximity/zero', deviceCtrl.findAllProximityZero);
 
 
-deviceApp.get('/proximity/first', deviceCtrl.findProximityFirst, auth.validatePublicAccess);
+deviceApp.get('/all/proximity/first', deviceCtrl.findAllProximityFirst);
 
 
-deviceApp.get('/proximity/second', deviceCtrl.findProximitySecond, auth.validatePublicAccess);
+deviceApp.get('/all/proximity/second', deviceCtrl.findAllProximitySecond);
 
 
-deviceApp.get('/proximity/third', deviceCtrl.findProximityThird, auth.validatePublicAccess);
+deviceApp.get('/all/proximity/third', deviceCtrl.findAllProximityThird);
 
 
-deviceApp.get('/selected/proximity', deviceCtrl.findSelectedProximity, auth.validatePublicAccess);
+deviceApp.get('/selected/proximity', deviceCtrl.findSelectedProximity);
 
 
-deviceApp.get('/selected/proximity/zero', deviceCtrl.findSelectedProximityZero, auth.validatePublicAccess);
+deviceApp.get('/selected/proximity/zero', deviceCtrl.findSelectedProximityZero);
 
 
-deviceApp.get('/selected/proximity/first', deviceCtrl.findSelectedProximityFirst, auth.validatePublicAccess);
+deviceApp.get('/selected/proximity/first', deviceCtrl.findSelectedProximityFirst);
 
 
-deviceApp.get('/selected/proximity/second', deviceCtrl.findSelectedProximitySecond, auth.validatePublicAccess);
+deviceApp.get('/selected/proximity/second', deviceCtrl.findSelectedProximitySecond);
 
 
-deviceApp.get('/selected/proximity/third', deviceCtrl.findSelectedProximityThird, auth.validatePublicAccess);
+deviceApp.get('/selected/proximity/third', deviceCtrl.findSelectedProximityThird);
 
 
-deviceApp.get('/my/proximity', deviceCtrl.findMyProximity, auth.validatePublicAccess);
+deviceApp.get('/my/proximity', deviceCtrl.findMyProximity);
 
 
-deviceApp.get('/my/proximity/zero', deviceCtrl.findMyProximityZero, auth.validatePublicAccess);
+deviceApp.get('/my/proximity/zero', deviceCtrl.findMyProximityZero);
 
 
-deviceApp.get('/my/proximity/first', deviceCtrl.findMyProximityFirst, auth.validatePublicAccess);
+deviceApp.get('/my/proximity/first', deviceCtrl.findMyProximityFirst);
 
 
-deviceApp.get('/my/proximity/second', deviceCtrl.findMyProximitySecond, auth.validatePublicAccess);
+deviceApp.get('/my/proximity/second', deviceCtrl.findMyProximitySecond);
 
 
-deviceApp.get('/my/proximity/third', deviceCtrl.findMyProximityThird, auth.validatePublicAccess);
+deviceApp.get('/my/proximity/third', deviceCtrl.findMyProximityThird);
 
 
-deviceApp.get('/by/:userId/proximity', deviceCtrl.findByProximity, auth.validatePublicAccess);
+deviceApp.get('/by/:userId/proximity', deviceCtrl.findByProximity);
 
 
-deviceApp.get('/by/:userId/proximity/zero', deviceCtrl.findByProximityZero, auth.validatePublicAccess);
+deviceApp.get('/by/:userId/proximity/zero', deviceCtrl.findByProximityZero);
 
 
-deviceApp.get('/by/:userId/proximity/first', deviceCtrl.findByProximityFirst, auth.validatePublicAccess);
+deviceApp.get('/by/:userId/proximity/first', deviceCtrl.findByProximityFirst);
 
 
-deviceApp.get('/by/:userId/proximity/second', deviceCtrl.findByProximitySecond, auth.validatePublicAccess);
+deviceApp.get('/by/:userId/proximity/second', deviceCtrl.findByProximitySecond);
 
 
-deviceApp.get('/by/:userId/proximity/third', deviceCtrl.findByProximityThird, auth.validatePublicAccess);
+deviceApp.get('/by/:userId/proximity/third', deviceCtrl.findByProximityThird);
 
 
-deviceApp.get('/:deviceId', deviceCtrl.find, auth.validatePublicAccess);
+deviceApp.get('/:deviceId', deviceCtrl.findById);
 
 
-deviceApp.post('/', deviceCtrl.create, auth.validateEditorAccess);
+deviceApp.post('/', deviceCtrl.create);
 
 
-deviceApp.put('/:deviceId', deviceCtrl.update, auth.validateEditorAccess);
+deviceApp.put('/:deviceId', deviceCtrl.update);
 
 
-deviceApp.delete('/:deviceId', deviceCtrl.delete, auth.validateEditorAccess);
+deviceApp.delete('/:deviceId', deviceCtrl.delete);
 
 
 
@@ -98,3 +98,4 @@ deviceApp.delete('/:deviceId', deviceCtrl.delete, auth.validateEditorAccess);
 
 
 module.exports = deviceApp;
+

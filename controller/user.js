@@ -1,36 +1,57 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-var User = require('../model/user');
-
-
+var User = require("../model/user");
 
 
 exports.findAll = function(req, res){
-    User.find({}, function(err, users){
-        if(err) throw err;
-        users.action = "findAll";
-        users.status = "success";
-        res.json(users);
+    return User.find({}, function(err, users){
+        if(err) {
+            var response = {
+                action:'get all users',
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
+        }
+        else{
+            var response = {
+                action:'get all users',
+                status:'success',
+                data:users,
+                dataType:'userArr',
+                code:200
+            };
+            res.status(200).json(response);
+        }
     });
 };
 
 
 exports.findById = function(req, res){
-    var id = req.params.userId;
-    if(id){
-        User.find({_id:id}, function(err, user){
-            if(err) throw err;
-            user.action = "findOne";
-            user.status = "success";
-            res.json(user);
-        });
-    }
+    var userId = req.params.userId;
+    User.findById(userId, function(err, user){
+        if(err) {
+            var response = {
+                action:'get users '+userId,
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
+        }
+        else{
+            var response = {
+                action:'get user '+userId,
+                status:'success',
+                data:user,
+                dataType:'user',
+                code:200
+            };
+            res.status(200).json(response);
+        }
+    });
 };
-
-
 
 exports.findByIds = function(req, res){
     var userIds = req.params.userIds;
@@ -321,7 +342,6 @@ exports.findAllProximity = function(req, res){
     });
 };
 
-
 exports.findAllProximityZero = function(req, res){
     var userId = req.params.userId;
     User.findByProximityZero(userId, function(err, users){
@@ -336,7 +356,6 @@ exports.findAllProximityZero = function(req, res){
         }
     });
 };
-
 
 exports.findAllProximityFirst = function(req, res){
     var userId = req.params.userId;
@@ -353,7 +372,6 @@ exports.findAllProximityFirst = function(req, res){
     });
 };
 
-
 exports.findAllProximitySecond = function(req, res){
     var userId = req.params.userId;
     User.findByProximitySecond(userId, function(err, users){
@@ -368,7 +386,6 @@ exports.findAllProximitySecond = function(req, res){
         }
     });
 };
-
 
 exports.findAllProximityThird = function(req, res){
     var userId = req.params.userId;
@@ -386,65 +403,65 @@ exports.findAllProximityThird = function(req, res){
 };
 
 
-
-
-
 exports.create = function(req, res){
-    
-    var user = new User({
-        local: {
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password
-        },
-        facebook: req.body.facebook
-    });
-    
-    User.find(user, function(err, user){
-        if(!user){
-            user.create(function(err, user, accessToken){
-                if(err) throw err;
-                user.action = "create";
-                user.status = "success";
-                res.json(user);
-            });
+    var user = {
+        userId:req.user._id,
+        length:req.body.length,
+        src:req.body.src,
+        coverImage:req.body.coverImage,
+        description:req.body.description,
+        title:req.body.title,
+        accessType:req.body.title
+    };
+    user = new User(user);
+    user.create(function(err, user){
+        if(err){
+            
+        }
+        else if(!user){
+            
         }
         else{
-            res.json({
-                action:"create",
-                status:"failed",
-                reason:"user already exist"
-            });
+            
         }
     });
 };
 
 
 exports.update = function(req, res){
-    var id = req.params.userId;
-    var newUser = req.body;
-    if(id){
-        User.find(id, function(err, user){
-            if(err) throw err;
-            user.local = newUser.local;
-            user.facebook = newUser.facebook;
-            user.action = "update";
-            user.status = "success";
-            res.json(user);
-        });
-    }
+    var userId = req.params.userId;
+    var user = {
+        userId:req.user._id,
+        length:req.body.length,
+        src:req.body.src,
+        coverImage:req.body.coverImage,
+        description:req.body.description,
+        title:req.body.title,
+        accessType:req.body.title
+    };
+    User.findOneAndUpdate(userId, user, function(err, user){
+        if(err){
+            
+        }
+        else if(!user){
+            
+        }
+        else{
+            
+        }
+    });
 };
-
 
 
 exports.delete = function(req, res){
-    var id = req.params.userId;
-    if(id){
-        User.remove(id, function(err, result){
-            if(err) throw err;
-            result.action = "delete";
-            result.status = "success";
-            res.json(status);
-        });
-    }
+    var userId = req.params.userId;
+    User.remove(userId, function(err, response){
+        if(err){
+            
+        }
+        else{
+            
+        }
+    });
 };
+

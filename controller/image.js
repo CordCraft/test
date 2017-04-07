@@ -7,15 +7,26 @@ var Image = require("../model/image");
 
 
 exports.findAll = function(req, res){
-    Image.find({}, function(err, images){
+    return Image.find({}, function(err, images){
         if(err) {
-            
-        }
-        else if(images.length === 0){
-            
+            var response = {
+                action:'get all images',
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get all images',
+                status:'success',
+                data:images,
+                dataType:'imageArr',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -24,14 +35,25 @@ exports.findAll = function(req, res){
 exports.findById = function(req, res){
     var imageId = req.params.imageId;
     Image.findById(imageId, function(err, image){
-        if(err){
-            
-        }
-        else if(!image){
-            
+        if(err) {
+            var response = {
+                action:'get images '+imageId,
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get image '+imageId,
+                status:'success',
+                data:image,
+                dataType:'image',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -447,6 +469,8 @@ exports.delete = function(req, res){
         }
     });
 };
+
+
 
 
 

@@ -11,7 +11,7 @@ var api = express();
 
 
 
-var audio = require('./api/audio');/*
+var audio = require('./api/audio');
 var basic = require('./api/basic');
 var call = require('./api/call');
 var chat = require('./api/chat');
@@ -26,7 +26,6 @@ var image = require('./api/image');
 var interest = require('./api/interest');
 var linearSuccess = require('./api/linearSuccess');
 var log = require('./api/log');
-var meet = require('./api/meet');
 var network = require('./api/network');
 var notification = require('./api/notification');
 var order = require('./api/order');
@@ -35,12 +34,12 @@ var proximity = require('./api/proximity');
 var quote = require('./api/quote');
 var search = require('./api/search');
 var skill = require('./api/skill');
-var stream = require('./api/stream');
-var video = require('./api/video');*/
+var user = require('./api/user');
+var video = require('./api/video');
 
 
 
-api.use('/audios', audio);/*
+api.use('/audios', audio);
 api.use('/basics', basic);
 api.use('/calls', call);
 api.use('/chats', chat);
@@ -55,7 +54,6 @@ api.use('/images', image);
 api.use('/interests', interest);
 api.use('/linearSuccesses', linearSuccess);
 api.use('/logs', log);
-api.use('/meets', meet);
 api.use('/networks', network);
 api.use('/notifications', notification);
 api.use('/orders', order);
@@ -64,8 +62,8 @@ api.use('/proximities', proximity);
 api.use('/quotes', quote);
 api.use('/searches', search);
 api.use('/skills', skill);
-api.use('/streams', stream);
-api.use('/videos', video);*/
+api.use('/users', user);
+api.use('/videos', video);
 
 
 api.all('/', function(req, res){

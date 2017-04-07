@@ -10,85 +10,85 @@ var videoStreamCtrl = require('../controller/videoStream');
 var auth = require('../auth');
 
 
-videoStreamApp.get('/', videoStreamCtrl.findAll, auth.validateAdminAccess);
+videoStreamApp.get('/', videoStreamCtrl.findAll);
 
 
-videoStreamApp.get('/by/userId', videoStreamCtrl.findByUserId, auth.validateAdminAccess);
+videoStreamApp.get('/by/userId', videoStreamCtrl.findByUserId);
 
 
-videoStreamApp.get('/by/userIds', videoStreamCtrl.findByUserIds, auth.validateAdminAccess);
+videoStreamApp.get('/by/userIds', videoStreamCtrl.findByUserIds);
 
 
-videoStreamApp.get('/proximity', videoStreamCtrl.findProximity, auth.validatePublicAccess);
+videoStreamApp.get('/all/proximity', videoStreamCtrl.findAllProximity);
 
 
-videoStreamApp.get('/proximity/zero', videoStreamCtrl.findProximityZero, auth.validatePublicAccess);
+videoStreamApp.get('/all/proximity/zero', videoStreamCtrl.findAllProximityZero);
 
 
-videoStreamApp.get('/proximity/first', videoStreamCtrl.findProximityFirst, auth.validatePublicAccess);
+videoStreamApp.get('/all/proximity/first', videoStreamCtrl.findAllProximityFirst);
 
 
-videoStreamApp.get('/proximity/second', videoStreamCtrl.findProximitySecond, auth.validatePublicAccess);
+videoStreamApp.get('/all/proximity/second', videoStreamCtrl.findAllProximitySecond);
 
 
-videoStreamApp.get('/proximity/third', videoStreamCtrl.findProximityThird, auth.validatePublicAccess);
+videoStreamApp.get('/all/proximity/third', videoStreamCtrl.findAllProximityThird);
 
 
-videoStreamApp.get('/selected/proximity', videoStreamCtrl.findSelectedProximity, auth.validatePublicAccess);
+videoStreamApp.get('/selected/proximity', videoStreamCtrl.findSelectedProximity);
 
 
-videoStreamApp.get('/selected/proximity/zero', videoStreamCtrl.findSelectedProximityZero, auth.validatePublicAccess);
+videoStreamApp.get('/selected/proximity/zero', videoStreamCtrl.findSelectedProximityZero);
 
 
-videoStreamApp.get('/selected/proximity/first', videoStreamCtrl.findSelectedProximityFirst, auth.validatePublicAccess);
+videoStreamApp.get('/selected/proximity/first', videoStreamCtrl.findSelectedProximityFirst);
 
 
-videoStreamApp.get('/selected/proximity/second', videoStreamCtrl.findSelectedProximitySecond, auth.validatePublicAccess);
+videoStreamApp.get('/selected/proximity/second', videoStreamCtrl.findSelectedProximitySecond);
 
 
-videoStreamApp.get('/selected/proximity/third', videoStreamCtrl.findSelectedProximityThird, auth.validatePublicAccess);
+videoStreamApp.get('/selected/proximity/third', videoStreamCtrl.findSelectedProximityThird);
 
 
-videoStreamApp.get('/my/proximity', videoStreamCtrl.findMyProximity, auth.validatePublicAccess);
+videoStreamApp.get('/my/proximity', videoStreamCtrl.findMyProximity);
 
 
-videoStreamApp.get('/my/proximity/zero', videoStreamCtrl.findMyProximityZero, auth.validatePublicAccess);
+videoStreamApp.get('/my/proximity/zero', videoStreamCtrl.findMyProximityZero);
 
 
-videoStreamApp.get('/my/proximity/first', videoStreamCtrl.findMyProximityFirst, auth.validatePublicAccess);
+videoStreamApp.get('/my/proximity/first', videoStreamCtrl.findMyProximityFirst);
 
 
-videoStreamApp.get('/my/proximity/second', videoStreamCtrl.findMyProximitySecond, auth.validatePublicAccess);
+videoStreamApp.get('/my/proximity/second', videoStreamCtrl.findMyProximitySecond);
 
 
-videoStreamApp.get('/my/proximity/third', videoStreamCtrl.findMyProximityThird, auth.validatePublicAccess);
+videoStreamApp.get('/my/proximity/third', videoStreamCtrl.findMyProximityThird);
 
 
-videoStreamApp.get('/by/:userId/proximity', videoStreamCtrl.findByProximity, auth.validatePublicAccess);
+videoStreamApp.get('/by/:userId/proximity', videoStreamCtrl.findByProximity);
 
 
-videoStreamApp.get('/by/:userId/proximity/zero', videoStreamCtrl.findByProximityZero, auth.validatePublicAccess);
+videoStreamApp.get('/by/:userId/proximity/zero', videoStreamCtrl.findByProximityZero);
 
 
-videoStreamApp.get('/by/:userId/proximity/first', videoStreamCtrl.findByProximityFirst, auth.validatePublicAccess);
+videoStreamApp.get('/by/:userId/proximity/first', videoStreamCtrl.findByProximityFirst);
 
 
-videoStreamApp.get('/by/:userId/proximity/second', videoStreamCtrl.findByProximitySecond, auth.validatePublicAccess);
+videoStreamApp.get('/by/:userId/proximity/second', videoStreamCtrl.findByProximitySecond);
 
 
-videoStreamApp.get('/by/:userId/proximity/third', videoStreamCtrl.findByProximityThird, auth.validatePublicAccess);
+videoStreamApp.get('/by/:userId/proximity/third', videoStreamCtrl.findByProximityThird);
 
 
-videoStreamApp.get('/:videoStreamId', videoStreamCtrl.find, auth.validatePublicAccess);
+videoStreamApp.get('/:videoStreamId', videoStreamCtrl.findById);
 
 
-videoStreamApp.post('/', videoStreamCtrl.create, auth.validateEditorAccess);
+videoStreamApp.post('/', videoStreamCtrl.create);
 
 
-videoStreamApp.put('/:videoStreamId', videoStreamCtrl.update, auth.validateEditorAccess);
+videoStreamApp.put('/:videoStreamId', videoStreamCtrl.update);
 
 
-videoStreamApp.delete('/:videoStreamId', videoStreamCtrl.delete, auth.validateEditorAccess);
+videoStreamApp.delete('/:videoStreamId', videoStreamCtrl.delete);
 
 
 
@@ -96,3 +96,4 @@ videoStreamApp.delete('/:videoStreamId', videoStreamCtrl.delete, auth.validateEd
 
 
 module.exports = videoStreamApp;
+

@@ -14,9 +14,36 @@ var database = require('./database');
 //USE FOR LOCAL TESTING
 //database.connect(dbConfig.local);
 //USE FOR LOCAL DEVELOPMENT AND TESTING
-//database.connect(dbConfig.localTest);
+database.connect(dbConfig.local);
 //USE FOR CLOUD DEVELOPMENT AND TESTING
-database.connect(dbConfig.cloudTest);
+////database.connect(dbConfig.cloudTest);
+
+
+
+/*
+ * @type Socket.io On connection, make socket listen to pigeon 
+ * actions for events. And on disconnection, remove socket as a
+ * listener.
+ */
+/*
+var io = require('socket.io');
+var Pigeon = require('./model/pigeon');
+io.on("connection", function(socket){
+    socket.on("init_pigeon_listener", function(data){
+        var token = data.token;
+        convertTokenToRoom
+    });
+    io.on("disconnection", function(){
+        //Leave personal room.
+        if
+    });
+    
+});*/
+
+
+
+
+
 
 
 
@@ -37,8 +64,8 @@ app.set('view engine', 'jade');
 
 
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// vendor middlewares
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -48,7 +75,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-//Routing and Mounting apps
+// application middlewares
 app.use('/', routes);
 app.use('/users', users);
 app.use('/api', api);

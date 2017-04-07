@@ -8,15 +8,26 @@ var Device = require("../model/device");
 
 
 exports.findAll = function(req, res){
-    Device.find({}, function(err, devices){
+    return Device.find({}, function(err, devices){
         if(err) {
-            
-        }
-        else if(devices.length === 0){
-            
+            var response = {
+                action:'get all devices',
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get all devices',
+                status:'success',
+                data:devices,
+                dataType:'deviceArr',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -25,14 +36,25 @@ exports.findAll = function(req, res){
 exports.findById = function(req, res){
     var deviceId = req.params.deviceId;
     Device.findById(deviceId, function(err, device){
-        if(err){
-            
-        }
-        else if(!device){
-            
+        if(err) {
+            var response = {
+                action:'get devices '+deviceId,
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get device '+deviceId,
+                status:'success',
+                data:device,
+                dataType:'device',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -448,5 +470,4 @@ exports.delete = function(req, res){
         }
     });
 };
-
 

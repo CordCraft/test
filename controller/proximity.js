@@ -1,21 +1,27 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 var Proximity = require("../model/proximity");
 
 
 exports.findAll = function(req, res){
-    Proximity.find({}, function(err, proximitys){
+    return Proximity.find({}, function(err, proximitys){
         if(err) {
-            
-        }
-        else if(proximitys.length === 0){
-            
+            var response = {
+                action:'get all proximitys',
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get all proximitys',
+                status:'success',
+                data:proximitys,
+                dataType:'proximityArr',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -24,14 +30,25 @@ exports.findAll = function(req, res){
 exports.findById = function(req, res){
     var proximityId = req.params.proximityId;
     Proximity.findById(proximityId, function(err, proximity){
-        if(err){
-            
-        }
-        else if(!proximity){
-            
+        if(err) {
+            var response = {
+                action:'get proximitys '+proximityId,
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get proximity '+proximityId,
+                status:'success',
+                data:proximity,
+                dataType:'proximity',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -447,6 +464,4 @@ exports.delete = function(req, res){
         }
     });
 };
-
-
 

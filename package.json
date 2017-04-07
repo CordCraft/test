@@ -1,5 +1,5 @@
 {
-    "name": "ProxCopy",
+    "name": "mity",
     "version": "0.0.0",
     "private": true,
     "scripts": {
@@ -21,7 +21,11 @@
         "less-middleware": "1.0.x",
         "morgan": "~1.7.0",
         "serve-favicon": "~2.3.0",
-        "socket.io":"1.7.0",
+        "redis":"",
+        "socket.io":"",
+        "socket.io-client":"",
+        "socket.io-redis":"",
+        "socket.io-emitter":"",
         "jsonwebtoken":"",
         "passport":"",
         "passport-local":"",

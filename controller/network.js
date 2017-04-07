@@ -7,15 +7,26 @@ var Network = require("../model/network");
 
 
 exports.findAll = function(req, res){
-    Network.find({}, function(err, networks){
+    return Network.find({}, function(err, networks){
         if(err) {
-            
-        }
-        else if(networks.length === 0){
-            
+            var response = {
+                action:'get all networks',
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get all networks',
+                status:'success',
+                data:networks,
+                dataType:'networkArr',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -24,14 +35,25 @@ exports.findAll = function(req, res){
 exports.findById = function(req, res){
     var networkId = req.params.networkId;
     Network.findById(networkId, function(err, network){
-        if(err){
-            
-        }
-        else if(!network){
-            
+        if(err) {
+            var response = {
+                action:'get networks '+networkId,
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get network '+networkId,
+                status:'success',
+                data:network,
+                dataType:'network',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -447,6 +469,8 @@ exports.delete = function(req, res){
         }
     });
 };
+
+
 
 
 

@@ -5,18 +5,40 @@
  */
 
 var AudioStream = require("../model/audioStream");
+var events = require('events');
+var emitter  = new events.EventEmitter();
+
+
+function respond(req, res, response){
+    req.response = response;
+    res.status(response.code).json(response);
+    emitter.emit(response.event, req);
+}
 
 
 exports.findAll = function(req, res){
-    AudioStream.find({}, function(err, audioStreams){
+    return AudioStream.find({}, function(err, audioStreams){
         if(err) {
-            
-        }
-        else if(audioStreams.length === 0){
-            
+            var response = {
+                action:'get all audioStreams',
+                status:'failed',
+                event:'audio_findAll_failed',
+                reason:err,
+                code:500
+            };
+            respond(req, res, response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get all audioStreams',
+                status:'success',
+                event:'audio_findAll_successful',
+                data:audioStreams,
+                dataType:'audioStreamArr',
+                code:200
+            };
+            respond(req, res, response);
         }
     });
 };
@@ -25,14 +47,25 @@ exports.findAll = function(req, res){
 exports.findById = function(req, res){
     var audioStreamId = req.params.audioStreamId;
     AudioStream.findById(audioStreamId, function(err, audioStream){
-        if(err){
-            
-        }
-        else if(!audioStream){
-            
+        if(err) {
+            var response = {
+                action:'get audioStreams '+audioStreamId,
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get audioStream '+audioStreamId,
+                status:'success',
+                data:audioStream,
+                dataType:'audioStream',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -99,11 +132,11 @@ exports.findByProximity = function(req, res){
 
 exports.findByProximityZero = function(req, res){
     var userId = req.params.userId;
-    AudioStream.findByProximityZero(userId, function(err, audioStreams){
+    Audio.findByProximityZero(userId, function(err, audios){
         if(err){
             
         }
-        else if(!audioStreams){
+        else if(!audios){
             
         }
         else{
@@ -114,11 +147,11 @@ exports.findByProximityZero = function(req, res){
 
 exports.findByProximityFirst = function(req, res){
     var userId = req.params.userId;
-    AudioStream.findByProximityFirst(userId, function(err, audioStreams){
+    Audio.findByProximityFirst(userId, function(err, audios){
         if(err){
             
         }
-        else if(!audioStreams){
+        else if(!audios){
             
         }
         else{
@@ -129,11 +162,11 @@ exports.findByProximityFirst = function(req, res){
 
 exports.findByProximitySecond = function(req, res){
     var userId = req.params.userId;
-    AudioStream.findByProximitySecond(userId, function(err, audioStreams){
+    Audio.findByProximitySecond(userId, function(err, audios){
         if(err){
             
         }
-        else if(!audioStreams){
+        else if(!audios){
             
         }
         else{
@@ -144,11 +177,11 @@ exports.findByProximitySecond = function(req, res){
 
 exports.findByProximityThird = function(req, res){
     var userId = req.params.userId;
-    AudioStream.findByProximityThird(userId, function(err, audioStreams){
+    Audio.findByProximityThird(userId, function(err, audios){
         if(err){
             
         }
-        else if(!audioStreams){
+        else if(!audios){
             
         }
         else{
@@ -160,11 +193,11 @@ exports.findByProximityThird = function(req, res){
 
 exports.findMyProximity = function(req, res){
     var userId = req.user._id;
-    AudioStream.findById(userId, function(err, audioStream){
+    Audio.findById(userId, function(err, audio){
         if(err){
             
         }
-        else if(!audioStream){
+        else if(!audio){
             
         }
         else{
@@ -175,11 +208,11 @@ exports.findMyProximity = function(req, res){
 
 exports.findMyProximityZero = function(req, res){
     var userId = req.user._id;
-    AudioStream.findByProximityZero(userId, function(err, audioStreams){
+    Audio.findByProximityZero(userId, function(err, audios){
         if(err){
             
         }
-        else if(!audioStreams){
+        else if(!audios){
             
         }
         else{
@@ -190,11 +223,11 @@ exports.findMyProximityZero = function(req, res){
 
 exports.findMyProximityFirst = function(req, res){
     var userId = req.user._id;
-    AudioStream.findByProximityFirst(userId, function(err, audioStreams){
+    Audio.findByProximityFirst(userId, function(err, audios){
         if(err){
             
         }
-        else if(!audioStreams){
+        else if(!audios){
             
         }
         else{
@@ -205,11 +238,11 @@ exports.findMyProximityFirst = function(req, res){
 
 exports.findMyProximitySecond = function(req, res){
     var userId = req.user._id;
-    AudioStream.findByProximitySecond(userId, function(err, audioStreams){
+    Audio.findByProximitySecond(userId, function(err, audios){
         if(err){
             
         }
-        else if(!audioStreams){
+        else if(!audios){
             
         }
         else{
@@ -220,11 +253,11 @@ exports.findMyProximitySecond = function(req, res){
 
 exports.findMyProximityThird = function(req, res){
     var userId = req.user._id;
-    AudioStream.findByProximityThird(userId, function(err, audioStreams){
+    Audio.findByProximityThird(userId, function(err, audios){
         if(err){
             
         }
-        else if(!audioStreams){
+        else if(!audios){
             
         }
         else{
@@ -236,11 +269,11 @@ exports.findMyProximityThird = function(req, res){
 
 exports.findSelectedProximity = function(req, res){
     var userId = req.params.userId;
-    AudioStream.findById(userId, function(err, audioStream){
+    Audio.findById(userId, function(err, audio){
         if(err){
             
         }
-        else if(!audioStream){
+        else if(!audio){
             
         }
         else{
@@ -251,11 +284,11 @@ exports.findSelectedProximity = function(req, res){
 
 exports.findSelectedProximityZero = function(req, res){
     var userId = req.params.userId;
-    AudioStream.findByProximityZero(userId, function(err, audioStreams){
+    Audio.findByProximityZero(userId, function(err, audios){
         if(err){
             
         }
-        else if(!audioStreams){
+        else if(!audios){
             
         }
         else{
@@ -266,11 +299,11 @@ exports.findSelectedProximityZero = function(req, res){
 
 exports.findSelectedProximityFirst = function(req, res){
     var userId = req.params.userId;
-    AudioStream.findByProximityFirst(userId, function(err, audioStreams){
+    Audio.findByProximityFirst(userId, function(err, audios){
         if(err){
             
         }
-        else if(!audioStreams){
+        else if(!audios){
             
         }
         else{
@@ -281,11 +314,11 @@ exports.findSelectedProximityFirst = function(req, res){
 
 exports.findSelectedProximitySecond = function(req, res){
     var userId = req.params.userId;
-    AudioStream.findByProximitySecond(userId, function(err, audioStreams){
+    Audio.findByProximitySecond(userId, function(err, audios){
         if(err){
             
         }
-        else if(!audioStreams){
+        else if(!audios){
             
         }
         else{
@@ -296,11 +329,11 @@ exports.findSelectedProximitySecond = function(req, res){
 
 exports.findSelectedProximityThird = function(req, res){
     var userId = req.params.userId;
-    AudioStream.findByProximityThird(userId, function(err, audioStreams){
+    Audio.findByProximityThird(userId, function(err, audios){
         if(err){
             
         }
-        else if(!audioStreams){
+        else if(!audios){
             
         }
         else{
@@ -313,11 +346,11 @@ exports.findSelectedProximityThird = function(req, res){
 
 exports.findAllProximity = function(req, res){
     var userId = req.params.userId;
-    AudioStream.findById(userId, function(err, audioStream){
+    Audio.findById(userId, function(err, audio){
         if(err){
             
         }
-        else if(!audioStream){
+        else if(!audio){
             
         }
         else{
@@ -328,11 +361,11 @@ exports.findAllProximity = function(req, res){
 
 exports.findAllProximityZero = function(req, res){
     var userId = req.params.userId;
-    AudioStream.findByProximityZero(userId, function(err, audioStreams){
+    Audio.findByProximityZero(userId, function(err, audios){
         if(err){
             
         }
-        else if(!audioStreams){
+        else if(!audios){
             
         }
         else{
@@ -343,11 +376,11 @@ exports.findAllProximityZero = function(req, res){
 
 exports.findAllProximityFirst = function(req, res){
     var userId = req.params.userId;
-    AudioStream.findByProximityFirst(userId, function(err, audioStreams){
+    Audio.findByProximityFirst(userId, function(err, audios){
         if(err){
             
         }
-        else if(!audioStreams){
+        else if(!audios){
             
         }
         else{
@@ -358,11 +391,11 @@ exports.findAllProximityFirst = function(req, res){
 
 exports.findAllProximitySecond = function(req, res){
     var userId = req.params.userId;
-    AudioStream.findByProximitySecond(userId, function(err, audioStreams){
+    Audio.findByProximitySecond(userId, function(err, audios){
         if(err){
             
         }
-        else if(!audioStreams){
+        else if(!audios){
             
         }
         else{
@@ -373,11 +406,11 @@ exports.findAllProximitySecond = function(req, res){
 
 exports.findAllProximityThird = function(req, res){
     var userId = req.params.userId;
-    AudioStream.findByProximityThird(userId, function(err, audioStreams){
+    Audio.findByProximityThird(userId, function(err, audios){
         if(err){
             
         }
-        else if(!audioStreams){
+        else if(!audios){
             
         }
         else{
@@ -388,7 +421,7 @@ exports.findAllProximityThird = function(req, res){
 
 
 exports.create = function(req, res){
-    var audioStream = {
+    var audio = {
         userId:req.user._id,
         length:req.body.length,
         src:req.body.src,
@@ -397,12 +430,12 @@ exports.create = function(req, res){
         title:req.body.title,
         accessType:req.body.title
     };
-    audioStream = new AudioStream(audioStream);
-    audioStream.create(function(err, audioStream){
+    audio = new Audio(audio);
+    audio.create(function(err, audio){
         if(err){
             
         }
-        else if(!audioStream){
+        else if(!audio){
             
         }
         else{
@@ -413,8 +446,8 @@ exports.create = function(req, res){
 
 
 exports.update = function(req, res){
-    var audioStreamId = req.params.audioStreamId;
-    var audioStream = {
+    var audioId = req.params.audioId;
+    var audio = {
         userId:req.user._id,
         length:req.body.length,
         src:req.body.src,
@@ -423,11 +456,11 @@ exports.update = function(req, res){
         title:req.body.title,
         accessType:req.body.title
     };
-    AudioStream.findOneAndUpdate(audioStreamId, audioStream, function(err, audioStream){
+    Audio.findOneAndUpdate(audioId, audio, function(err, audio){
         if(err){
             
         }
-        else if(!audioStream){
+        else if(!audio){
             
         }
         else{
@@ -438,8 +471,8 @@ exports.update = function(req, res){
 
 
 exports.delete = function(req, res){
-    var audioStreamId = req.params.audioStreamId;
-    AudioStream.remove(audioStreamId, function(err, response){
+    var audioId = req.params.audioId;
+    Audio.remove(audioId, function(err, response){
         if(err){
             
         }
@@ -449,5 +482,81 @@ exports.delete = function(req, res){
     });
 };
 
+
+exports.start = function(req, res){
+    
+};
+
+
+exports.play = function(req, res){
+    
+};
+
+
+exports.pause = function(req, res){
+    
+};
+
+exports.resumeAt = function(req, res){
+    
+};
+
+exports.stop = function(req, res){
+    
+};
+
+exports.replay = function(req, res){
+    
+};
+
+
+exports.onStart = function(req, res){
+    
+};
+
+
+exports.onPlay = function(){
+    
+};
+
+
+exports.onStop = function(){
+    
+};
+
+
+exports.onResume = function(){
+    
+};
+
+
+exports.onReplay = function(){
+    
+};
+
+
+exports.onCreate = function(){
+    
+};
+
+
+exports.onFindAll = function(){
+    
+};
+
+
+exports.onFindById = function(){
+    
+};
+
+
+exports.onFindByUserIds = function(){
+    
+};
+
+
+exports.onFindByUserId = function(){
+    
+};
 
 

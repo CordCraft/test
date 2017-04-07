@@ -9,15 +9,26 @@ var Interest = require("../model/interest");
 
 
 exports.findAll = function(req, res){
-    Interest.find({}, function(err, interests){
+    return Interest.find({}, function(err, interests){
         if(err) {
-            
-        }
-        else if(interests.length === 0){
-            
+            var response = {
+                action:'get all interests',
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get all interests',
+                status:'success',
+                data:interests,
+                dataType:'interestArr',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -26,14 +37,25 @@ exports.findAll = function(req, res){
 exports.findById = function(req, res){
     var interestId = req.params.interestId;
     Interest.findById(interestId, function(err, interest){
-        if(err){
-            
-        }
-        else if(!interest){
-            
+        if(err) {
+            var response = {
+                action:'get interests '+interestId,
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get interest '+interestId,
+                status:'success',
+                data:interest,
+                dataType:'interest',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };

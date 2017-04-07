@@ -12,14 +12,14 @@ var SECRET_LENGTH = 16;
 
 var accessTokenSchema = mongoose.Schema({
     token:String,
-    userId:String,
+    accessId:String,
     secret:String
 });
 
 accessTokenSchema.method.genSecretTokenAndSave = function(callback){
     var accessToken = this.model('AccessToken');
     var secret = secretGen(SECRET_LENGTH);
-    var token = jwt.sign({userId:accessToken.userId}, secret);
+    var token = jwt.sign({accessId:accessToken.accessId}, secret);
     
     accessToken.secret = secret;
     accessToken.token = token;

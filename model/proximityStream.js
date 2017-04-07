@@ -12,8 +12,10 @@ var proximitySchema = mongoose.Schema({
     userId:{
         type:String, unique:true
     },
-    time:{type:Date, default:Date.now},
-    proximiters:Array
+    stream:[{
+        time:{type:Date, default:Date.now},
+        userIds:Array
+    }]
 });
 
 

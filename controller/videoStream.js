@@ -1,22 +1,27 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 var VideoStream = require("../model/videoStream");
 
 
 exports.findAll = function(req, res){
-    VideoStream.find({}, function(err, videoStreams){
+    return VideoStream.find({}, function(err, videoStreams){
         if(err) {
-            
-        }
-        else if(videoStreams.length === 0){
-            
+            var response = {
+                action:'get all videoStreams',
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get all videoStreams',
+                status:'success',
+                data:videoStreams,
+                dataType:'videoStreamArr',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -25,14 +30,25 @@ exports.findAll = function(req, res){
 exports.findById = function(req, res){
     var videoStreamId = req.params.videoStreamId;
     VideoStream.findById(videoStreamId, function(err, videoStream){
-        if(err){
-            
-        }
-        else if(!videoStream){
-            
+        if(err) {
+            var response = {
+                action:'get videoStreams '+videoStreamId,
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get videoStream '+videoStreamId,
+                status:'success',
+                data:videoStream,
+                dataType:'videoStream',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -448,5 +464,4 @@ exports.delete = function(req, res){
         }
     });
 };
-
 

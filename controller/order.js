@@ -8,15 +8,26 @@ var Order = require("../model/order");
 
 
 exports.findAll = function(req, res){
-    Order.find({}, function(err, orders){
+    return Order.find({}, function(err, orders){
         if(err) {
-            
-        }
-        else if(orders.length === 0){
-            
+            var response = {
+                action:'get all orders',
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get all orders',
+                status:'success',
+                data:orders,
+                dataType:'orderArr',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -25,14 +36,25 @@ exports.findAll = function(req, res){
 exports.findById = function(req, res){
     var orderId = req.params.orderId;
     Order.findById(orderId, function(err, order){
-        if(err){
-            
-        }
-        else if(!order){
-            
+        if(err) {
+            var response = {
+                action:'get orders '+orderId,
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get order '+orderId,
+                status:'success',
+                data:order,
+                dataType:'order',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };

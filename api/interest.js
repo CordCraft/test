@@ -11,85 +11,85 @@ var interestCtrl = require('../controller/interest');
 var auth = require('../auth');
 
 
-interestApp.get('/', interestCtrl.findAll, auth.validateAdminAccess);
+interestApp.get('/', interestCtrl.findAll);
 
 
-interestApp.get('/by/userId', interestCtrl.findByUserId, auth.validateAdminAccess);
+interestApp.get('/by/userId', interestCtrl.findByUserId);
 
 
-interestApp.get('/by/userIds', interestCtrl.findByUserIds, auth.validateAdminAccess);
+interestApp.get('/by/userIds', interestCtrl.findByUserIds);
 
 
-interestApp.get('/proximity', interestCtrl.findProximity, auth.validatePublicAccess);
+interestApp.get('/all/proximity', interestCtrl.findAllProximity);
 
 
-interestApp.get('/proximity/zero', interestCtrl.findProximityZero, auth.validatePublicAccess);
+interestApp.get('/all/proximity/zero', interestCtrl.findAllProximityZero);
 
 
-interestApp.get('/proximity/first', interestCtrl.findProximityFirst, auth.validatePublicAccess);
+interestApp.get('/all/proximity/first', interestCtrl.findAllProximityFirst);
 
 
-interestApp.get('/proximity/second', interestCtrl.findProximitySecond, auth.validatePublicAccess);
+interestApp.get('/all/proximity/second', interestCtrl.findAllProximitySecond);
 
 
-interestApp.get('/proximity/third', interestCtrl.findProximityThird, auth.validatePublicAccess);
+interestApp.get('/all/proximity/third', interestCtrl.findAllProximityThird);
 
 
-interestApp.get('/selected/proximity', interestCtrl.findSelectedProximity, auth.validatePublicAccess);
+interestApp.get('/selected/proximity', interestCtrl.findSelectedProximity);
 
 
-interestApp.get('/selected/proximity/zero', interestCtrl.findSelectedProximityZero, auth.validatePublicAccess);
+interestApp.get('/selected/proximity/zero', interestCtrl.findSelectedProximityZero);
 
 
-interestApp.get('/selected/proximity/first', interestCtrl.findSelectedProximityFirst, auth.validatePublicAccess);
+interestApp.get('/selected/proximity/first', interestCtrl.findSelectedProximityFirst);
 
 
-interestApp.get('/selected/proximity/second', interestCtrl.findSelectedProximitySecond, auth.validatePublicAccess);
+interestApp.get('/selected/proximity/second', interestCtrl.findSelectedProximitySecond);
 
 
-interestApp.get('/selected/proximity/third', interestCtrl.findSelectedProximityThird, auth.validatePublicAccess);
+interestApp.get('/selected/proximity/third', interestCtrl.findSelectedProximityThird);
 
 
-interestApp.get('/my/proximity', interestCtrl.findMyProximity, auth.validatePublicAccess);
+interestApp.get('/my/proximity', interestCtrl.findMyProximity);
 
 
-interestApp.get('/my/proximity/zero', interestCtrl.findMyProximityZero, auth.validatePublicAccess);
+interestApp.get('/my/proximity/zero', interestCtrl.findMyProximityZero);
 
 
-interestApp.get('/my/proximity/first', interestCtrl.findMyProximityFirst, auth.validatePublicAccess);
+interestApp.get('/my/proximity/first', interestCtrl.findMyProximityFirst);
 
 
-interestApp.get('/my/proximity/second', interestCtrl.findMyProximitySecond, auth.validatePublicAccess);
+interestApp.get('/my/proximity/second', interestCtrl.findMyProximitySecond);
 
 
-interestApp.get('/my/proximity/third', interestCtrl.findMyProximityThird, auth.validatePublicAccess);
+interestApp.get('/my/proximity/third', interestCtrl.findMyProximityThird);
 
 
-interestApp.get('/by/:userId/proximity', interestCtrl.findByProximity, auth.validatePublicAccess);
+interestApp.get('/by/:userId/proximity', interestCtrl.findByProximity);
 
 
-interestApp.get('/by/:userId/proximity/zero', interestCtrl.findByProximityZero, auth.validatePublicAccess);
+interestApp.get('/by/:userId/proximity/zero', interestCtrl.findByProximityZero);
 
 
-interestApp.get('/by/:userId/proximity/first', interestCtrl.findByProximityFirst, auth.validatePublicAccess);
+interestApp.get('/by/:userId/proximity/first', interestCtrl.findByProximityFirst);
 
 
-interestApp.get('/by/:userId/proximity/second', interestCtrl.findByProximitySecond, auth.validatePublicAccess);
+interestApp.get('/by/:userId/proximity/second', interestCtrl.findByProximitySecond);
 
 
-interestApp.get('/by/:userId/proximity/third', interestCtrl.findByProximityThird, auth.validatePublicAccess);
+interestApp.get('/by/:userId/proximity/third', interestCtrl.findByProximityThird);
 
 
-interestApp.get('/:interestId', interestCtrl.find, auth.validatePublicAccess);
+interestApp.get('/:interestId', interestCtrl.findById);
 
 
-interestApp.post('/', interestCtrl.create, auth.validateEditorAccess);
+interestApp.post('/', interestCtrl.create);
 
 
-interestApp.put('/:interestId', interestCtrl.update, auth.validateEditorAccess);
+interestApp.put('/:interestId', interestCtrl.update);
 
 
-interestApp.delete('/:interestId', interestCtrl.delete, auth.validateEditorAccess);
+interestApp.delete('/:interestId', interestCtrl.delete);
 
 
 
@@ -97,3 +97,4 @@ interestApp.delete('/:interestId', interestCtrl.delete, auth.validateEditorAcces
 
 
 module.exports = interestApp;
+

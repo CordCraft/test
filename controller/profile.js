@@ -8,15 +8,26 @@ var Profile = require("../model/profile");
 
 
 exports.findAll = function(req, res){
-    Profile.find({}, function(err, profiles){
+    return Profile.find({}, function(err, profiles){
         if(err) {
-            
-        }
-        else if(profiles.length === 0){
-            
+            var response = {
+                action:'get all profiles',
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get all profiles',
+                status:'success',
+                data:profiles,
+                dataType:'profileArr',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -25,14 +36,25 @@ exports.findAll = function(req, res){
 exports.findById = function(req, res){
     var profileId = req.params.profileId;
     Profile.findById(profileId, function(err, profile){
-        if(err){
-            
-        }
-        else if(!profile){
-            
+        if(err) {
+            var response = {
+                action:'get profiles '+profileId,
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get profile '+profileId,
+                status:'success',
+                data:profile,
+                dataType:'profile',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -448,5 +470,4 @@ exports.delete = function(req, res){
         }
     });
 };
-
 

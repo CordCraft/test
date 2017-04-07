@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-
 var express = require('express');
 var profileApp = express();
 var profileCtrl = require('../controller/profile');
@@ -12,85 +11,85 @@ var profileCtrl = require('../controller/profile');
 var auth = require('../auth');
 
 
-profileApp.get('/', profileCtrl.findAll, auth.validateAdminAccess);
+profileApp.get('/', profileCtrl.findAll);
 
 
-profileApp.get('/by/userId', profileCtrl.findByUserId, auth.validateAdminAccess);
+profileApp.get('/by/userId', profileCtrl.findByUserId);
 
 
-profileApp.get('/by/userIds', profileCtrl.findByUserIds, auth.validateAdminAccess);
+profileApp.get('/by/userIds', profileCtrl.findByUserIds);
 
 
-profileApp.get('/proximity', profileCtrl.findProximity, auth.validatePublicAccess);
+profileApp.get('/all/proximity', profileCtrl.findAllProximity);
 
 
-profileApp.get('/proximity/zero', profileCtrl.findProximityZero, auth.validatePublicAccess);
+profileApp.get('/all/proximity/zero', profileCtrl.findAllProximityZero);
 
 
-profileApp.get('/proximity/first', profileCtrl.findProximityFirst, auth.validatePublicAccess);
+profileApp.get('/all/proximity/first', profileCtrl.findAllProximityFirst);
 
 
-profileApp.get('/proximity/second', profileCtrl.findProximitySecond, auth.validatePublicAccess);
+profileApp.get('/all/proximity/second', profileCtrl.findAllProximitySecond);
 
 
-profileApp.get('/proximity/third', profileCtrl.findProximityThird, auth.validatePublicAccess);
+profileApp.get('/all/proximity/third', profileCtrl.findAllProximityThird);
 
 
-profileApp.get('/selected/proximity', profileCtrl.findSelectedProximity, auth.validatePublicAccess);
+profileApp.get('/selected/proximity', profileCtrl.findSelectedProximity);
 
 
-profileApp.get('/selected/proximity/zero', profileCtrl.findSelectedProximityZero, auth.validatePublicAccess);
+profileApp.get('/selected/proximity/zero', profileCtrl.findSelectedProximityZero);
 
 
-profileApp.get('/selected/proximity/first', profileCtrl.findSelectedProximityFirst, auth.validatePublicAccess);
+profileApp.get('/selected/proximity/first', profileCtrl.findSelectedProximityFirst);
 
 
-profileApp.get('/selected/proximity/second', profileCtrl.findSelectedProximitySecond, auth.validatePublicAccess);
+profileApp.get('/selected/proximity/second', profileCtrl.findSelectedProximitySecond);
 
 
-profileApp.get('/selected/proximity/third', profileCtrl.findSelectedProximityThird, auth.validatePublicAccess);
+profileApp.get('/selected/proximity/third', profileCtrl.findSelectedProximityThird);
 
 
-profileApp.get('/my/proximity', profileCtrl.findMyProximity, auth.validatePublicAccess);
+profileApp.get('/my/proximity', profileCtrl.findMyProximity);
 
 
-profileApp.get('/my/proximity/zero', profileCtrl.findMyProximityZero, auth.validatePublicAccess);
+profileApp.get('/my/proximity/zero', profileCtrl.findMyProximityZero);
 
 
-profileApp.get('/my/proximity/first', profileCtrl.findMyProximityFirst, auth.validatePublicAccess);
+profileApp.get('/my/proximity/first', profileCtrl.findMyProximityFirst);
 
 
-profileApp.get('/my/proximity/second', profileCtrl.findMyProximitySecond, auth.validatePublicAccess);
+profileApp.get('/my/proximity/second', profileCtrl.findMyProximitySecond);
 
 
-profileApp.get('/my/proximity/third', profileCtrl.findMyProximityThird, auth.validatePublicAccess);
+profileApp.get('/my/proximity/third', profileCtrl.findMyProximityThird);
 
 
-profileApp.get('/by/:userId/proximity', profileCtrl.findByProximity, auth.validatePublicAccess);
+profileApp.get('/by/:userId/proximity', profileCtrl.findByProximity);
 
 
-profileApp.get('/by/:userId/proximity/zero', profileCtrl.findByProximityZero, auth.validatePublicAccess);
+profileApp.get('/by/:userId/proximity/zero', profileCtrl.findByProximityZero);
 
 
-profileApp.get('/by/:userId/proximity/first', profileCtrl.findByProximityFirst, auth.validatePublicAccess);
+profileApp.get('/by/:userId/proximity/first', profileCtrl.findByProximityFirst);
 
 
-profileApp.get('/by/:userId/proximity/second', profileCtrl.findByProximitySecond, auth.validatePublicAccess);
+profileApp.get('/by/:userId/proximity/second', profileCtrl.findByProximitySecond);
 
 
-profileApp.get('/by/:userId/proximity/third', profileCtrl.findByProximityThird, auth.validatePublicAccess);
+profileApp.get('/by/:userId/proximity/third', profileCtrl.findByProximityThird);
 
 
-profileApp.get('/:profileId', profileCtrl.find, auth.validatePublicAccess);
+profileApp.get('/:profileId', profileCtrl.findById);
 
 
-profileApp.post('/', profileCtrl.create, auth.validateEditorAccess);
+profileApp.post('/', profileCtrl.create);
 
 
-profileApp.put('/:profileId', profileCtrl.update, auth.validateEditorAccess);
+profileApp.put('/:profileId', profileCtrl.update);
 
 
-profileApp.delete('/:profileId', profileCtrl.delete, auth.validateEditorAccess);
+profileApp.delete('/:profileId', profileCtrl.delete);
 
 
 
@@ -98,3 +97,4 @@ profileApp.delete('/:profileId', profileCtrl.delete, auth.validateEditorAccess);
 
 
 module.exports = profileApp;
+

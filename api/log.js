@@ -10,85 +10,85 @@ var logCtrl = require('../controller/log');
 var auth = require('../auth');
 
 
-logApp.get('/', logCtrl.findAll, auth.validateAdminAccess);
+logApp.get('/', logCtrl.findAll);
 
 
-logApp.get('/by/userId', logCtrl.findByUserId, auth.validateAdminAccess);
+logApp.get('/by/userId', logCtrl.findByUserId);
 
 
-logApp.get('/by/userIds', logCtrl.findByUserIds, auth.validateAdminAccess);
+logApp.get('/by/userIds', logCtrl.findByUserIds);
 
 
-logApp.get('/proximity', logCtrl.findProximity, auth.validatePublicAccess);
+logApp.get('/all/proximity', logCtrl.findAllProximity);
 
 
-logApp.get('/proximity/zero', logCtrl.findProximityZero, auth.validatePublicAccess);
+logApp.get('/all/proximity/zero', logCtrl.findAllProximityZero);
 
 
-logApp.get('/proximity/first', logCtrl.findProximityFirst, auth.validatePublicAccess);
+logApp.get('/all/proximity/first', logCtrl.findAllProximityFirst);
 
 
-logApp.get('/proximity/second', logCtrl.findProximitySecond, auth.validatePublicAccess);
+logApp.get('/all/proximity/second', logCtrl.findAllProximitySecond);
 
 
-logApp.get('/proximity/third', logCtrl.findProximityThird, auth.validatePublicAccess);
+logApp.get('/all/proximity/third', logCtrl.findAllProximityThird);
 
 
-logApp.get('/selected/proximity', logCtrl.findSelectedProximity, auth.validatePublicAccess);
+logApp.get('/selected/proximity', logCtrl.findSelectedProximity);
 
 
-logApp.get('/selected/proximity/zero', logCtrl.findSelectedProximityZero, auth.validatePublicAccess);
+logApp.get('/selected/proximity/zero', logCtrl.findSelectedProximityZero);
 
 
-logApp.get('/selected/proximity/first', logCtrl.findSelectedProximityFirst, auth.validatePublicAccess);
+logApp.get('/selected/proximity/first', logCtrl.findSelectedProximityFirst);
 
 
-logApp.get('/selected/proximity/second', logCtrl.findSelectedProximitySecond, auth.validatePublicAccess);
+logApp.get('/selected/proximity/second', logCtrl.findSelectedProximitySecond);
 
 
-logApp.get('/selected/proximity/third', logCtrl.findSelectedProximityThird, auth.validatePublicAccess);
+logApp.get('/selected/proximity/third', logCtrl.findSelectedProximityThird);
 
 
-logApp.get('/my/proximity', logCtrl.findMyProximity, auth.validatePublicAccess);
+logApp.get('/my/proximity', logCtrl.findMyProximity);
 
 
-logApp.get('/my/proximity/zero', logCtrl.findMyProximityZero, auth.validatePublicAccess);
+logApp.get('/my/proximity/zero', logCtrl.findMyProximityZero);
 
 
-logApp.get('/my/proximity/first', logCtrl.findMyProximityFirst, auth.validatePublicAccess);
+logApp.get('/my/proximity/first', logCtrl.findMyProximityFirst);
 
 
-logApp.get('/my/proximity/second', logCtrl.findMyProximitySecond, auth.validatePublicAccess);
+logApp.get('/my/proximity/second', logCtrl.findMyProximitySecond);
 
 
-logApp.get('/my/proximity/third', logCtrl.findMyProximityThird, auth.validatePublicAccess);
+logApp.get('/my/proximity/third', logCtrl.findMyProximityThird);
 
 
-logApp.get('/by/:userId/proximity', logCtrl.findByProximity, auth.validatePublicAccess);
+logApp.get('/by/:userId/proximity', logCtrl.findByProximity);
 
 
-logApp.get('/by/:userId/proximity/zero', logCtrl.findByProximityZero, auth.validatePublicAccess);
+logApp.get('/by/:userId/proximity/zero', logCtrl.findByProximityZero);
 
 
-logApp.get('/by/:userId/proximity/first', logCtrl.findByProximityFirst, auth.validatePublicAccess);
+logApp.get('/by/:userId/proximity/first', logCtrl.findByProximityFirst);
 
 
-logApp.get('/by/:userId/proximity/second', logCtrl.findByProximitySecond, auth.validatePublicAccess);
+logApp.get('/by/:userId/proximity/second', logCtrl.findByProximitySecond);
 
 
-logApp.get('/by/:userId/proximity/third', logCtrl.findByProximityThird, auth.validatePublicAccess);
+logApp.get('/by/:userId/proximity/third', logCtrl.findByProximityThird);
 
 
-logApp.get('/:logId', logCtrl.find, auth.validatePublicAccess);
+logApp.get('/:logId', logCtrl.findById);
 
 
-logApp.post('/', logCtrl.create, auth.validateEditorAccess);
+logApp.post('/', logCtrl.create);
 
 
-logApp.put('/:logId', logCtrl.update, auth.validateEditorAccess);
+logApp.put('/:logId', logCtrl.update);
 
 
-logApp.delete('/:logId', logCtrl.delete, auth.validateEditorAccess);
+logApp.delete('/:logId', logCtrl.delete);
 
 
 

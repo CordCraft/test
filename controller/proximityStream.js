@@ -1,11 +1,18 @@
-var Quote = require("../model/quote");
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+
+var ProximityStream = require("../model/proximityStream");
 
 
 exports.findAll = function(req, res){
-    return Quote.find({}, function(err, quotes){
+    return ProximityStream.find({}, function(err, proximityStreams){
         if(err) {
             var response = {
-                action:'get all quotes',
+                action:'get all proximityStreams',
                 status:'failed',
                 reason:err,
                 code:500
@@ -15,10 +22,10 @@ exports.findAll = function(req, res){
         }
         else{
             var response = {
-                action:'get all quotes',
+                action:'get all proximityStreams',
                 status:'success',
-                data:quotes,
-                dataType:'quoteArr',
+                data:proximityStreams,
+                dataType:'proximityStreamArr',
                 code:200
             };
             res.status(200).json(response);
@@ -28,11 +35,11 @@ exports.findAll = function(req, res){
 
 
 exports.findById = function(req, res){
-    var quoteId = req.params.quoteId;
-    Quote.findById(quoteId, function(err, quote){
+    var proximityStreamId = req.params.proximityStreamId;
+    ProximityStream.findById(proximityStreamId, function(err, proximityStream){
         if(err) {
             var response = {
-                action:'get quotes '+quoteId,
+                action:'get proximityStreams '+proximityStreamId,
                 status:'failed',
                 reason:err,
                 code:500
@@ -42,10 +49,10 @@ exports.findById = function(req, res){
         }
         else{
             var response = {
-                action:'get quote '+quoteId,
+                action:'get proximityStream '+proximityStreamId,
                 status:'success',
-                data:quote,
-                dataType:'quote',
+                data:proximityStream,
+                dataType:'proximityStream',
                 code:200
             };
             res.status(200).json(response);
@@ -54,12 +61,12 @@ exports.findById = function(req, res){
 };
 
 exports.findByIds = function(req, res){
-    var quoteIds = req.params.quoteIds;
-    Quote.findByIds(quoteIds, function(err, quotes){
+    var proximityStreamIds = req.params.proximityStreamIds;
+    ProximityStream.findByIds(proximityStreamIds, function(err, proximityStreams){
         if(err){
             
         }
-        else if(!quotes){
+        else if(!proximityStreams){
             
         }
         else{
@@ -70,11 +77,11 @@ exports.findByIds = function(req, res){
 
 exports.findByUserId = function(req, res){
     var userId = req.params.userId;
-    Quote.findByUserId(userId, function(err, quotes){
+    ProximityStream.findByUserId(userId, function(err, proximityStreams){
         if(err){
             
         }
-        else if(!quotes){
+        else if(!proximityStreams){
             
         }
         else{
@@ -85,11 +92,11 @@ exports.findByUserId = function(req, res){
 
 exports.findByUserIds = function(req, res){
     var userIds = req.params.userIds;
-    Quote.findByUserIds(userIds, function(err, quotes){
+    ProximityStream.findByUserIds(userIds, function(err, proximityStreams){
         if(err){
             
         }
-        else if(!quotes){
+        else if(!proximityStreams){
             
         }
         else{
@@ -100,11 +107,11 @@ exports.findByUserIds = function(req, res){
 
 exports.findByProximity = function(req, res){
     var userId = req.params.userId;
-    Quote.findById(userId, function(err, quote){
+    ProximityStream.findById(userId, function(err, proximityStream){
         if(err){
             
         }
-        else if(!quote){
+        else if(!proximityStream){
             
         }
         else{
@@ -115,11 +122,11 @@ exports.findByProximity = function(req, res){
 
 exports.findByProximityZero = function(req, res){
     var userId = req.params.userId;
-    Quote.findByProximityZero(userId, function(err, quotes){
+    ProximityStream.findByProximityZero(userId, function(err, proximityStreams){
         if(err){
             
         }
-        else if(!quotes){
+        else if(!proximityStreams){
             
         }
         else{
@@ -130,11 +137,11 @@ exports.findByProximityZero = function(req, res){
 
 exports.findByProximityFirst = function(req, res){
     var userId = req.params.userId;
-    Quote.findByProximityFirst(userId, function(err, quotes){
+    ProximityStream.findByProximityFirst(userId, function(err, proximityStreams){
         if(err){
             
         }
-        else if(!quotes){
+        else if(!proximityStreams){
             
         }
         else{
@@ -145,11 +152,11 @@ exports.findByProximityFirst = function(req, res){
 
 exports.findByProximitySecond = function(req, res){
     var userId = req.params.userId;
-    Quote.findByProximitySecond(userId, function(err, quotes){
+    ProximityStream.findByProximitySecond(userId, function(err, proximityStreams){
         if(err){
             
         }
-        else if(!quotes){
+        else if(!proximityStreams){
             
         }
         else{
@@ -160,11 +167,11 @@ exports.findByProximitySecond = function(req, res){
 
 exports.findByProximityThird = function(req, res){
     var userId = req.params.userId;
-    Quote.findByProximityThird(userId, function(err, quotes){
+    ProximityStream.findByProximityThird(userId, function(err, proximityStreams){
         if(err){
             
         }
-        else if(!quotes){
+        else if(!proximityStreams){
             
         }
         else{
@@ -176,11 +183,11 @@ exports.findByProximityThird = function(req, res){
 
 exports.findMyProximity = function(req, res){
     var userId = req.user._id;
-    Quote.findById(userId, function(err, quote){
+    ProximityStream.findById(userId, function(err, proximityStream){
         if(err){
             
         }
-        else if(!quote){
+        else if(!proximityStream){
             
         }
         else{
@@ -191,11 +198,11 @@ exports.findMyProximity = function(req, res){
 
 exports.findMyProximityZero = function(req, res){
     var userId = req.user._id;
-    Quote.findByProximityZero(userId, function(err, quotes){
+    ProximityStream.findByProximityZero(userId, function(err, proximityStreams){
         if(err){
             
         }
-        else if(!quotes){
+        else if(!proximityStreams){
             
         }
         else{
@@ -206,11 +213,11 @@ exports.findMyProximityZero = function(req, res){
 
 exports.findMyProximityFirst = function(req, res){
     var userId = req.user._id;
-    Quote.findByProximityFirst(userId, function(err, quotes){
+    ProximityStream.findByProximityFirst(userId, function(err, proximityStreams){
         if(err){
             
         }
-        else if(!quotes){
+        else if(!proximityStreams){
             
         }
         else{
@@ -221,11 +228,11 @@ exports.findMyProximityFirst = function(req, res){
 
 exports.findMyProximitySecond = function(req, res){
     var userId = req.user._id;
-    Quote.findByProximitySecond(userId, function(err, quotes){
+    ProximityStream.findByProximitySecond(userId, function(err, proximityStreams){
         if(err){
             
         }
-        else if(!quotes){
+        else if(!proximityStreams){
             
         }
         else{
@@ -236,11 +243,11 @@ exports.findMyProximitySecond = function(req, res){
 
 exports.findMyProximityThird = function(req, res){
     var userId = req.user._id;
-    Quote.findByProximityThird(userId, function(err, quotes){
+    ProximityStream.findByProximityThird(userId, function(err, proximityStreams){
         if(err){
             
         }
-        else if(!quotes){
+        else if(!proximityStreams){
             
         }
         else{
@@ -252,11 +259,11 @@ exports.findMyProximityThird = function(req, res){
 
 exports.findSelectedProximity = function(req, res){
     var userId = req.params.userId;
-    Quote.findById(userId, function(err, quote){
+    ProximityStream.findById(userId, function(err, proximityStream){
         if(err){
             
         }
-        else if(!quote){
+        else if(!proximityStream){
             
         }
         else{
@@ -267,11 +274,11 @@ exports.findSelectedProximity = function(req, res){
 
 exports.findSelectedProximityZero = function(req, res){
     var userId = req.params.userId;
-    Quote.findByProximityZero(userId, function(err, quotes){
+    ProximityStream.findByProximityZero(userId, function(err, proximityStreams){
         if(err){
             
         }
-        else if(!quotes){
+        else if(!proximityStreams){
             
         }
         else{
@@ -282,11 +289,11 @@ exports.findSelectedProximityZero = function(req, res){
 
 exports.findSelectedProximityFirst = function(req, res){
     var userId = req.params.userId;
-    Quote.findByProximityFirst(userId, function(err, quotes){
+    ProximityStream.findByProximityFirst(userId, function(err, proximityStreams){
         if(err){
             
         }
-        else if(!quotes){
+        else if(!proximityStreams){
             
         }
         else{
@@ -297,11 +304,11 @@ exports.findSelectedProximityFirst = function(req, res){
 
 exports.findSelectedProximitySecond = function(req, res){
     var userId = req.params.userId;
-    Quote.findByProximitySecond(userId, function(err, quotes){
+    ProximityStream.findByProximitySecond(userId, function(err, proximityStreams){
         if(err){
             
         }
-        else if(!quotes){
+        else if(!proximityStreams){
             
         }
         else{
@@ -312,11 +319,11 @@ exports.findSelectedProximitySecond = function(req, res){
 
 exports.findSelectedProximityThird = function(req, res){
     var userId = req.params.userId;
-    Quote.findByProximityThird(userId, function(err, quotes){
+    ProximityStream.findByProximityThird(userId, function(err, proximityStreams){
         if(err){
             
         }
-        else if(!quotes){
+        else if(!proximityStreams){
             
         }
         else{
@@ -329,11 +336,11 @@ exports.findSelectedProximityThird = function(req, res){
 
 exports.findAllProximity = function(req, res){
     var userId = req.params.userId;
-    Quote.findById(userId, function(err, quote){
+    ProximityStream.findById(userId, function(err, proximityStream){
         if(err){
             
         }
-        else if(!quote){
+        else if(!proximityStream){
             
         }
         else{
@@ -344,11 +351,11 @@ exports.findAllProximity = function(req, res){
 
 exports.findAllProximityZero = function(req, res){
     var userId = req.params.userId;
-    Quote.findByProximityZero(userId, function(err, quotes){
+    ProximityStream.findByProximityZero(userId, function(err, proximityStreams){
         if(err){
             
         }
-        else if(!quotes){
+        else if(!proximityStreams){
             
         }
         else{
@@ -359,11 +366,11 @@ exports.findAllProximityZero = function(req, res){
 
 exports.findAllProximityFirst = function(req, res){
     var userId = req.params.userId;
-    Quote.findByProximityFirst(userId, function(err, quotes){
+    ProximityStream.findByProximityFirst(userId, function(err, proximityStreams){
         if(err){
             
         }
-        else if(!quotes){
+        else if(!proximityStreams){
             
         }
         else{
@@ -374,11 +381,11 @@ exports.findAllProximityFirst = function(req, res){
 
 exports.findAllProximitySecond = function(req, res){
     var userId = req.params.userId;
-    Quote.findByProximitySecond(userId, function(err, quotes){
+    ProximityStream.findByProximitySecond(userId, function(err, proximityStreams){
         if(err){
             
         }
-        else if(!quotes){
+        else if(!proximityStreams){
             
         }
         else{
@@ -389,11 +396,11 @@ exports.findAllProximitySecond = function(req, res){
 
 exports.findAllProximityThird = function(req, res){
     var userId = req.params.userId;
-    Quote.findByProximityThird(userId, function(err, quotes){
+    ProximityStream.findByProximityThird(userId, function(err, proximityStreams){
         if(err){
             
         }
-        else if(!quotes){
+        else if(!proximityStreams){
             
         }
         else{
@@ -404,7 +411,7 @@ exports.findAllProximityThird = function(req, res){
 
 
 exports.create = function(req, res){
-    var quote = {
+    var proximityStream = {
         userId:req.user._id,
         length:req.body.length,
         src:req.body.src,
@@ -413,12 +420,12 @@ exports.create = function(req, res){
         title:req.body.title,
         accessType:req.body.title
     };
-    quote = new Quote(quote);
-    quote.create(function(err, quote){
+    proximityStream = new Proximity(proximityStream);
+    proximityStream.create(function(err, proximityStream){
         if(err){
             
         }
-        else if(!quote){
+        else if(!proximityStream){
             
         }
         else{
@@ -429,8 +436,8 @@ exports.create = function(req, res){
 
 
 exports.update = function(req, res){
-    var quoteId = req.params.quoteId;
-    var quote = {
+    var proximityStreamId = req.params.proximityStreamId;
+    var proximityStream = {
         userId:req.user._id,
         length:req.body.length,
         src:req.body.src,
@@ -439,11 +446,11 @@ exports.update = function(req, res){
         title:req.body.title,
         accessType:req.body.title
     };
-    Quote.findOneAndUpdate(quoteId, quote, function(err, quote){
+    ProximityStream.findOneAndUpdate(proximityStreamId, proximityStream, function(err, proximityStream){
         if(err){
             
         }
-        else if(!quote){
+        else if(!proximityStream){
             
         }
         else{
@@ -454,8 +461,8 @@ exports.update = function(req, res){
 
 
 exports.delete = function(req, res){
-    var quoteId = req.params.quoteId;
-    Quote.remove(quoteId, function(err, response){
+    var proximityStreamId = req.params.proximityStreamId;
+    ProximityStream.remove(proximityStreamId, function(err, response){
         if(err){
             
         }

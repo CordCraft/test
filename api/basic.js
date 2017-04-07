@@ -11,85 +11,85 @@ var basicCtrl = require('../controller/basic');
 var auth = require('../auth');
 
 
-basicApp.get('/', basicCtrl.findAll, auth.validateAdminAccess);
+basicApp.get('/', basicCtrl.findAll);
 
 
-basicApp.get('/by/userId', basicCtrl.findByUserId, auth.validateAdminAccess);
+basicApp.get('/by/userId', basicCtrl.findByUserId);
 
 
-basicApp.get('/by/userIds', basicCtrl.findByUserIds, auth.validateAdminAccess);
+basicApp.get('/by/userIds', basicCtrl.findByUserIds);
 
 
-basicApp.get('/proximity', basicCtrl.findProximity, auth.validatePublicAccess);
+basicApp.get('/all/proximity', basicCtrl.findAllProximity);
 
 
-basicApp.get('/proximity/zero', basicCtrl.findProximityZero, auth.validatePublicAccess);
+basicApp.get('/all/proximity/zero', basicCtrl.findAllProximityZero);
 
 
-basicApp.get('/proximity/first', basicCtrl.findProximityFirst, auth.validatePublicAccess);
+basicApp.get('/all/proximity/first', basicCtrl.findAllProximityFirst);
 
 
-basicApp.get('/proximity/second', basicCtrl.findProximitySecond, auth.validatePublicAccess);
+basicApp.get('/all/proximity/second', basicCtrl.findAllProximitySecond);
 
 
-basicApp.get('/proximity/third', basicCtrl.findProximityThird, auth.validatePublicAccess);
+basicApp.get('/all/proximity/third', basicCtrl.findAllProximityThird);
 
 
-basicApp.get('/selected/proximity', basicCtrl.findSelectedProximity, auth.validatePublicAccess);
+basicApp.get('/selected/proximity', basicCtrl.findSelectedProximity);
 
 
-basicApp.get('/selected/proximity/zero', basicCtrl.findSelectedProximityZero, auth.validatePublicAccess);
+basicApp.get('/selected/proximity/zero', basicCtrl.findSelectedProximityZero);
 
 
-basicApp.get('/selected/proximity/first', basicCtrl.findSelectedProximityFirst, auth.validatePublicAccess);
+basicApp.get('/selected/proximity/first', basicCtrl.findSelectedProximityFirst);
 
 
-basicApp.get('/selected/proximity/second', basicCtrl.findSelectedProximitySecond, auth.validatePublicAccess);
+basicApp.get('/selected/proximity/second', basicCtrl.findSelectedProximitySecond);
 
 
-basicApp.get('/selected/proximity/third', basicCtrl.findSelectedProximityThird, auth.validatePublicAccess);
+basicApp.get('/selected/proximity/third', basicCtrl.findSelectedProximityThird);
 
 
-basicApp.get('/my/proximity', basicCtrl.findMyProximity, auth.validatePublicAccess);
+basicApp.get('/my/proximity', basicCtrl.findMyProximity);
 
 
-basicApp.get('/my/proximity/zero', basicCtrl.findMyProximityZero, auth.validatePublicAccess);
+basicApp.get('/my/proximity/zero', basicCtrl.findMyProximityZero);
 
 
-basicApp.get('/my/proximity/first', basicCtrl.findMyProximityFirst, auth.validatePublicAccess);
+basicApp.get('/my/proximity/first', basicCtrl.findMyProximityFirst);
 
 
-basicApp.get('/my/proximity/second', basicCtrl.findMyProximitySecond, auth.validatePublicAccess);
+basicApp.get('/my/proximity/second', basicCtrl.findMyProximitySecond);
 
 
-basicApp.get('/my/proximity/third', basicCtrl.findMyProximityThird, auth.validatePublicAccess);
+basicApp.get('/my/proximity/third', basicCtrl.findMyProximityThird);
 
 
-basicApp.get('/by/:userId/proximity', basicCtrl.findByProximity, auth.validatePublicAccess);
+basicApp.get('/by/:userId/proximity', basicCtrl.findByProximity);
 
 
-basicApp.get('/by/:userId/proximity/zero', basicCtrl.findByProximityZero, auth.validatePublicAccess);
+basicApp.get('/by/:userId/proximity/zero', basicCtrl.findByProximityZero);
 
 
-basicApp.get('/by/:userId/proximity/first', basicCtrl.findByProximityFirst, auth.validatePublicAccess);
+basicApp.get('/by/:userId/proximity/first', basicCtrl.findByProximityFirst);
 
 
-basicApp.get('/by/:userId/proximity/second', basicCtrl.findByProximitySecond, auth.validatePublicAccess);
+basicApp.get('/by/:userId/proximity/second', basicCtrl.findByProximitySecond);
 
 
-basicApp.get('/by/:userId/proximity/third', basicCtrl.findByProximityThird, auth.validatePublicAccess);
+basicApp.get('/by/:userId/proximity/third', basicCtrl.findByProximityThird);
 
 
-basicApp.get('/:basicId', basicCtrl.find, auth.validatePublicAccess);
+basicApp.get('/:basicId', basicCtrl.findById);
 
 
-basicApp.post('/', basicCtrl.create, auth.validateEditorAccess);
+basicApp.post('/', basicCtrl.create);
 
 
-basicApp.put('/:basicId', basicCtrl.update, auth.validateEditorAccess);
+basicApp.put('/:basicId', basicCtrl.update);
 
 
-basicApp.delete('/:basicId', basicCtrl.delete, auth.validateEditorAccess);
+basicApp.delete('/:basicId', basicCtrl.delete);
 
 
 

@@ -10,85 +10,85 @@ var imageStreamCtrl = require('../controller/imageStream');
 var auth = require('../auth');
 
 
-imageStreamApp.get('/', imageStreamCtrl.findAll, auth.validateAdminAccess);
+imageStreamApp.get('/', imageStreamCtrl.findAll);
 
 
-imageStreamApp.get('/by/userId', imageStreamCtrl.findByUserId, auth.validateAdminAccess);
+imageStreamApp.get('/by/userId', imageStreamCtrl.findByUserId);
 
 
-imageStreamApp.get('/by/userIds', imageStreamCtrl.findByUserIds, auth.validateAdminAccess);
+imageStreamApp.get('/by/userIds', imageStreamCtrl.findByUserIds);
 
 
-imageStreamApp.get('/proximity', imageStreamCtrl.findProximity, auth.validatePublicAccess);
+imageStreamApp.get('/all/proximity', imageStreamCtrl.findAllProximity);
 
 
-imageStreamApp.get('/proximity/zero', imageStreamCtrl.findProximityZero, auth.validatePublicAccess);
+imageStreamApp.get('/all/proximity/zero', imageStreamCtrl.findAllProximityZero);
 
 
-imageStreamApp.get('/proximity/first', imageStreamCtrl.findProximityFirst, auth.validatePublicAccess);
+imageStreamApp.get('/all/proximity/first', imageStreamCtrl.findAllProximityFirst);
 
 
-imageStreamApp.get('/proximity/second', imageStreamCtrl.findProximitySecond, auth.validatePublicAccess);
+imageStreamApp.get('/all/proximity/second', imageStreamCtrl.findAllProximitySecond);
 
 
-imageStreamApp.get('/proximity/third', imageStreamCtrl.findProximityThird, auth.validatePublicAccess);
+imageStreamApp.get('/all/proximity/third', imageStreamCtrl.findAllProximityThird);
 
 
-imageStreamApp.get('/selected/proximity', imageStreamCtrl.findSelectedProximity, auth.validatePublicAccess);
+imageStreamApp.get('/selected/proximity', imageStreamCtrl.findSelectedProximity);
 
 
-imageStreamApp.get('/selected/proximity/zero', imageStreamCtrl.findSelectedProximityZero, auth.validatePublicAccess);
+imageStreamApp.get('/selected/proximity/zero', imageStreamCtrl.findSelectedProximityZero);
 
 
-imageStreamApp.get('/selected/proximity/first', imageStreamCtrl.findSelectedProximityFirst, auth.validatePublicAccess);
+imageStreamApp.get('/selected/proximity/first', imageStreamCtrl.findSelectedProximityFirst);
 
 
-imageStreamApp.get('/selected/proximity/second', imageStreamCtrl.findSelectedProximitySecond, auth.validatePublicAccess);
+imageStreamApp.get('/selected/proximity/second', imageStreamCtrl.findSelectedProximitySecond);
 
 
-imageStreamApp.get('/selected/proximity/third', imageStreamCtrl.findSelectedProximityThird, auth.validatePublicAccess);
+imageStreamApp.get('/selected/proximity/third', imageStreamCtrl.findSelectedProximityThird);
 
 
-imageStreamApp.get('/my/proximity', imageStreamCtrl.findMyProximity, auth.validatePublicAccess);
+imageStreamApp.get('/my/proximity', imageStreamCtrl.findMyProximity);
 
 
-imageStreamApp.get('/my/proximity/zero', imageStreamCtrl.findMyProximityZero, auth.validatePublicAccess);
+imageStreamApp.get('/my/proximity/zero', imageStreamCtrl.findMyProximityZero);
 
 
-imageStreamApp.get('/my/proximity/first', imageStreamCtrl.findMyProximityFirst, auth.validatePublicAccess);
+imageStreamApp.get('/my/proximity/first', imageStreamCtrl.findMyProximityFirst);
 
 
-imageStreamApp.get('/my/proximity/second', imageStreamCtrl.findMyProximitySecond, auth.validatePublicAccess);
+imageStreamApp.get('/my/proximity/second', imageStreamCtrl.findMyProximitySecond);
 
 
-imageStreamApp.get('/my/proximity/third', imageStreamCtrl.findMyProximityThird, auth.validatePublicAccess);
+imageStreamApp.get('/my/proximity/third', imageStreamCtrl.findMyProximityThird);
 
 
-imageStreamApp.get('/by/:userId/proximity', imageStreamCtrl.findByProximity, auth.validatePublicAccess);
+imageStreamApp.get('/by/:userId/proximity', imageStreamCtrl.findByProximity);
 
 
-imageStreamApp.get('/by/:userId/proximity/zero', imageStreamCtrl.findByProximityZero, auth.validatePublicAccess);
+imageStreamApp.get('/by/:userId/proximity/zero', imageStreamCtrl.findByProximityZero);
 
 
-imageStreamApp.get('/by/:userId/proximity/first', imageStreamCtrl.findByProximityFirst, auth.validatePublicAccess);
+imageStreamApp.get('/by/:userId/proximity/first', imageStreamCtrl.findByProximityFirst);
 
 
-imageStreamApp.get('/by/:userId/proximity/second', imageStreamCtrl.findByProximitySecond, auth.validatePublicAccess);
+imageStreamApp.get('/by/:userId/proximity/second', imageStreamCtrl.findByProximitySecond);
 
 
-imageStreamApp.get('/by/:userId/proximity/third', imageStreamCtrl.findByProximityThird, auth.validatePublicAccess);
+imageStreamApp.get('/by/:userId/proximity/third', imageStreamCtrl.findByProximityThird);
 
 
-imageStreamApp.get('/:imageStreamId', imageStreamCtrl.find, auth.validatePublicAccess);
+imageStreamApp.get('/:imageStreamId', imageStreamCtrl.findById);
 
 
-imageStreamApp.post('/', imageStreamCtrl.create, auth.validateEditorAccess);
+imageStreamApp.post('/', imageStreamCtrl.create);
 
 
-imageStreamApp.put('/:imageStreamId', imageStreamCtrl.update, auth.validateEditorAccess);
+imageStreamApp.put('/:imageStreamId', imageStreamCtrl.update);
 
 
-imageStreamApp.delete('/:imageStreamId', imageStreamCtrl.delete, auth.validateEditorAccess);
+imageStreamApp.delete('/:imageStreamId', imageStreamCtrl.delete);
 
 
 
@@ -96,3 +96,4 @@ imageStreamApp.delete('/:imageStreamId', imageStreamCtrl.delete, auth.validateEd
 
 
 module.exports = imageStreamApp;
+

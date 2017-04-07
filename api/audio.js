@@ -86,12 +86,22 @@ audioApp.get('/:audioId', audioCtrl.findById);
 audioApp.post('/', audioCtrl.create);
 
 
+audioApp.put('/play()', audioCtrl.update);
+
+
+audioApp.put('/pause()', audioCtrl.update);
+
+
+audioApp.put('/resumeAt(/:time)', audioCtrl.update);
+
+
+audioApp.put('/stop()', audioCtrl.update);
+
+
 audioApp.put('/:audioId', audioCtrl.update);
 
 
 audioApp.delete('/:audioId', audioCtrl.delete);
-
-
 
 
 

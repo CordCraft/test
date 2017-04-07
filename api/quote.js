@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-
 var express = require('express');
 var quoteApp = express();
 var quoteCtrl = require('../controller/quote');
@@ -12,85 +11,85 @@ var quoteCtrl = require('../controller/quote');
 var auth = require('../auth');
 
 
-quoteApp.get('/', quoteCtrl.findAll, auth.validateAdminAccess);
+quoteApp.get('/', quoteCtrl.findAll);
 
 
-quoteApp.get('/by/userId', quoteCtrl.findByUserId, auth.validateAdminAccess);
+quoteApp.get('/by/userId', quoteCtrl.findByUserId);
 
 
-quoteApp.get('/by/userIds', quoteCtrl.findByUserIds, auth.validateAdminAccess);
+quoteApp.get('/by/userIds', quoteCtrl.findByUserIds);
 
 
-quoteApp.get('/proximity', quoteCtrl.findProximity, auth.validatePublicAccess);
+quoteApp.get('/all/proximity', quoteCtrl.findAllProximity);
 
 
-quoteApp.get('/proximity/zero', quoteCtrl.findProximityZero, auth.validatePublicAccess);
+quoteApp.get('/all/proximity/zero', quoteCtrl.findAllProximityZero);
 
 
-quoteApp.get('/proximity/first', quoteCtrl.findProximityFirst, auth.validatePublicAccess);
+quoteApp.get('/all/proximity/first', quoteCtrl.findAllProximityFirst);
 
 
-quoteApp.get('/proximity/second', quoteCtrl.findProximitySecond, auth.validatePublicAccess);
+quoteApp.get('/all/proximity/second', quoteCtrl.findAllProximitySecond);
 
 
-quoteApp.get('/proximity/third', quoteCtrl.findProximityThird, auth.validatePublicAccess);
+quoteApp.get('/all/proximity/third', quoteCtrl.findAllProximityThird);
 
 
-quoteApp.get('/selected/proximity', quoteCtrl.findSelectedProximity, auth.validatePublicAccess);
+quoteApp.get('/selected/proximity', quoteCtrl.findSelectedProximity);
 
 
-quoteApp.get('/selected/proximity/zero', quoteCtrl.findSelectedProximityZero, auth.validatePublicAccess);
+quoteApp.get('/selected/proximity/zero', quoteCtrl.findSelectedProximityZero);
 
 
-quoteApp.get('/selected/proximity/first', quoteCtrl.findSelectedProximityFirst, auth.validatePublicAccess);
+quoteApp.get('/selected/proximity/first', quoteCtrl.findSelectedProximityFirst);
 
 
-quoteApp.get('/selected/proximity/second', quoteCtrl.findSelectedProximitySecond, auth.validatePublicAccess);
+quoteApp.get('/selected/proximity/second', quoteCtrl.findSelectedProximitySecond);
 
 
-quoteApp.get('/selected/proximity/third', quoteCtrl.findSelectedProximityThird, auth.validatePublicAccess);
+quoteApp.get('/selected/proximity/third', quoteCtrl.findSelectedProximityThird);
 
 
-quoteApp.get('/my/proximity', quoteCtrl.findMyProximity, auth.validatePublicAccess);
+quoteApp.get('/my/proximity', quoteCtrl.findMyProximity);
 
 
-quoteApp.get('/my/proximity/zero', quoteCtrl.findMyProximityZero, auth.validatePublicAccess);
+quoteApp.get('/my/proximity/zero', quoteCtrl.findMyProximityZero);
 
 
-quoteApp.get('/my/proximity/first', quoteCtrl.findMyProximityFirst, auth.validatePublicAccess);
+quoteApp.get('/my/proximity/first', quoteCtrl.findMyProximityFirst);
 
 
-quoteApp.get('/my/proximity/second', quoteCtrl.findMyProximitySecond, auth.validatePublicAccess);
+quoteApp.get('/my/proximity/second', quoteCtrl.findMyProximitySecond);
 
 
-quoteApp.get('/my/proximity/third', quoteCtrl.findMyProximityThird, auth.validatePublicAccess);
+quoteApp.get('/my/proximity/third', quoteCtrl.findMyProximityThird);
 
 
-quoteApp.get('/by/:userId/proximity', quoteCtrl.findByProximity, auth.validatePublicAccess);
+quoteApp.get('/by/:userId/proximity', quoteCtrl.findByProximity);
 
 
-quoteApp.get('/by/:userId/proximity/zero', quoteCtrl.findByProximityZero, auth.validatePublicAccess);
+quoteApp.get('/by/:userId/proximity/zero', quoteCtrl.findByProximityZero);
 
 
-quoteApp.get('/by/:userId/proximity/first', quoteCtrl.findByProximityFirst, auth.validatePublicAccess);
+quoteApp.get('/by/:userId/proximity/first', quoteCtrl.findByProximityFirst);
 
 
-quoteApp.get('/by/:userId/proximity/second', quoteCtrl.findByProximitySecond, auth.validatePublicAccess);
+quoteApp.get('/by/:userId/proximity/second', quoteCtrl.findByProximitySecond);
 
 
-quoteApp.get('/by/:userId/proximity/third', quoteCtrl.findByProximityThird, auth.validatePublicAccess);
+quoteApp.get('/by/:userId/proximity/third', quoteCtrl.findByProximityThird);
 
 
-quoteApp.get('/:quoteId', quoteCtrl.find, auth.validatePublicAccess);
+quoteApp.get('/:quoteId', quoteCtrl.findById);
 
 
-quoteApp.post('/', quoteCtrl.create, auth.validateEditorAccess);
+quoteApp.post('/', quoteCtrl.create);
 
 
-quoteApp.put('/:quoteId', quoteCtrl.update, auth.validateEditorAccess);
+quoteApp.put('/:quoteId', quoteCtrl.update);
 
 
-quoteApp.delete('/:quoteId', quoteCtrl.delete, auth.validateEditorAccess);
+quoteApp.delete('/:quoteId', quoteCtrl.delete);
 
 
 
@@ -98,3 +97,4 @@ quoteApp.delete('/:quoteId', quoteCtrl.delete, auth.validateEditorAccess);
 
 
 module.exports = quoteApp;
+

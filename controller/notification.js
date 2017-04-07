@@ -3,20 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 var Notification = require("../model/notification");
 
 
 exports.findAll = function(req, res){
-    Notification.find({}, function(err, notifications){
+    return Notification.find({}, function(err, notifications){
         if(err) {
-            
-        }
-        else if(notifications.length === 0){
-            
+            var response = {
+                action:'get all notifications',
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get all notifications',
+                status:'success',
+                data:notifications,
+                dataType:'notificationArr',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -25,14 +35,25 @@ exports.findAll = function(req, res){
 exports.findById = function(req, res){
     var notificationId = req.params.notificationId;
     Notification.findById(notificationId, function(err, notification){
-        if(err){
-            
-        }
-        else if(!notification){
-            
+        if(err) {
+            var response = {
+                action:'get notifications '+notificationId,
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get notification '+notificationId,
+                status:'success',
+                data:notification,
+                dataType:'notification',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -448,5 +469,4 @@ exports.delete = function(req, res){
         }
     });
 };
-
 

@@ -9,15 +9,26 @@ var Education = require("../model/education");
 
 
 exports.findAll = function(req, res){
-    Education.find({}, function(err, educations){
+    return Education.find({}, function(err, educations){
         if(err) {
-            
-        }
-        else if(educations.length === 0){
-            
+            var response = {
+                action:'get all educations',
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get all educations',
+                status:'success',
+                data:educations,
+                dataType:'educationArr',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -26,14 +37,25 @@ exports.findAll = function(req, res){
 exports.findById = function(req, res){
     var educationId = req.params.educationId;
     Education.findById(educationId, function(err, education){
-        if(err){
-            
-        }
-        else if(!education){
-            
+        if(err) {
+            var response = {
+                action:'get educations '+educationId,
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get education '+educationId,
+                status:'success',
+                data:education,
+                dataType:'education',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };

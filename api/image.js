@@ -11,95 +11,85 @@ var imageCtrl = require('../controller/image');
 var auth = require('../auth');
 
 
-imageApp.get('/', imageCtrl.findAll, auth.validateAdminAccess);
+imageApp.get('/', imageCtrl.findAll);
 
 
-imageApp.get('/by/userId', imageCtrl.findByUserId, auth.validateAdminAccess);
+imageApp.get('/by/userId', imageCtrl.findByUserId);
 
 
-imageApp.get('/by/userIds', imageCtrl.findByUserIds, auth.validateAdminAccess);
+imageApp.get('/by/userIds', imageCtrl.findByUserIds);
 
 
-imageApp.get('/proximity', imageCtrl.findProximity, auth.validatePublicAccess);
+imageApp.get('/all/proximity', imageCtrl.findAllProximity);
 
 
-imageApp.get('/proximity/zero', imageCtrl.findProximityZero, auth.validatePublicAccess);
+imageApp.get('/all/proximity/zero', imageCtrl.findAllProximityZero);
 
 
-imageApp.get('/proximity/first', imageCtrl.findProximityFirst, auth.validatePublicAccess);
+imageApp.get('/all/proximity/first', imageCtrl.findAllProximityFirst);
 
 
-imageApp.get('/proximity/second', imageCtrl.findProximitySecond, auth.validatePublicAccess);
+imageApp.get('/all/proximity/second', imageCtrl.findAllProximitySecond);
 
 
-imageApp.get('/proximity/third', imageCtrl.findProximityThird, auth.validatePublicAccess);
+imageApp.get('/all/proximity/third', imageCtrl.findAllProximityThird);
 
 
-imageApp.get('/selected/proximity', imageCtrl.findSelectedProximity, auth.validatePublicAccess);
+imageApp.get('/selected/proximity', imageCtrl.findSelectedProximity);
 
 
-imageApp.get('/selected/proximity/zero', imageCtrl.findSelectedProximityZero, auth.validatePublicAccess);
+imageApp.get('/selected/proximity/zero', imageCtrl.findSelectedProximityZero);
 
 
-imageApp.get('/selected/proximity/first', imageCtrl.findSelectedProximityFirst, auth.validatePublicAccess);
+imageApp.get('/selected/proximity/first', imageCtrl.findSelectedProximityFirst);
 
 
-imageApp.get('/selected/proximity/second', imageCtrl.findSelectedProximitySecond, auth.validatePublicAccess);
+imageApp.get('/selected/proximity/second', imageCtrl.findSelectedProximitySecond);
 
 
-imageApp.get('/selected/proximity/third', imageCtrl.findSelectedProximityThird, auth.validatePublicAccess);
+imageApp.get('/selected/proximity/third', imageCtrl.findSelectedProximityThird);
 
 
-imageApp.get('/my/proximity', imageCtrl.findMyProximity, auth.validatePublicAccess);
+imageApp.get('/my/proximity', imageCtrl.findMyProximity);
 
 
-imageApp.get('/my/proximity/zero', imageCtrl.findMyProximityZero, auth.validatePublicAccess);
+imageApp.get('/my/proximity/zero', imageCtrl.findMyProximityZero);
 
 
-imageApp.get('/my/proximity/first', imageCtrl.findMyProximityFirst, auth.validatePublicAccess);
+imageApp.get('/my/proximity/first', imageCtrl.findMyProximityFirst);
 
 
-imageApp.get('/my/proximity/second', imageCtrl.findMyProximitySecond, auth.validatePublicAccess);
+imageApp.get('/my/proximity/second', imageCtrl.findMyProximitySecond);
 
 
-imageApp.get('/my/proximity/third', imageCtrl.findMyProximityThird, auth.validatePublicAccess);
+imageApp.get('/my/proximity/third', imageCtrl.findMyProximityThird);
 
 
-imageApp.get('/by/:userId/proximity', imageCtrl.findByProximity, auth.validatePublicAccess);
+imageApp.get('/by/:userId/proximity', imageCtrl.findByProximity);
 
 
-imageApp.get('/by/:userId/proximity/zero', imageCtrl.findByProximityZero, auth.validatePublicAccess);
+imageApp.get('/by/:userId/proximity/zero', imageCtrl.findByProximityZero);
 
 
-imageApp.get('/by/:userId/proximity/first', imageCtrl.findByProximityFirst, auth.validatePublicAccess);
+imageApp.get('/by/:userId/proximity/first', imageCtrl.findByProximityFirst);
 
 
-imageApp.get('/by/:userId/proximity/second', imageCtrl.findByProximitySecond, auth.validatePublicAccess);
+imageApp.get('/by/:userId/proximity/second', imageCtrl.findByProximitySecond);
 
 
-imageApp.get('/by/:userId/proximity/third', imageCtrl.findByProximityThird, auth.validatePublicAccess);
+imageApp.get('/by/:userId/proximity/third', imageCtrl.findByProximityThird);
 
 
-imageApp.get('/:imageId', imageCtrl.find, auth.validatePublicAccess);
+imageApp.get('/:imageId', imageCtrl.findById);
 
 
-imageApp.post('/', imageCtrl.create, auth.validateEditorAccess);
+imageApp.post('/', imageCtrl.create);
 
 
-imageApp.put('/:imageId', imageCtrl.update, auth.validateEditorAccess);
+imageApp.put('/:imageId', imageCtrl.update);
 
 
-imageApp.delete('/:imageId', imageCtrl.delete, auth.validateEditorAccess);
-
-
-
-
-
-
-module.exports = imageApp;
-
-
-
+imageApp.delete('/:imageId', imageCtrl.delete);
 
 
 
@@ -107,3 +97,4 @@ module.exports = imageApp;
 
 
 module.exports = imageApp;
+

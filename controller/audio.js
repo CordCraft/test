@@ -471,3 +471,24 @@ exports.delete = function(req, res){
     });
 };
 
+
+
+exports.play = function(req, res){
+    
+    return null;
+};
+
+
+exports.pause = function(req, res){
+    return null;
+};
+
+
+exports.stop = function(req, res){
+    return null;
+};
+
+
+exports.resumeAt = function(req, res){
+    return null;
+};

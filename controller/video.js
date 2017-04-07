@@ -1,22 +1,27 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 var Video = require("../model/video");
 
 
 exports.findAll = function(req, res){
-    Video.find({}, function(err, videos){
+    return Video.find({}, function(err, videos){
         if(err) {
-            
-        }
-        else if(videos.length === 0){
-            
+            var response = {
+                action:'get all videos',
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get all videos',
+                status:'success',
+                data:videos,
+                dataType:'videoArr',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -25,14 +30,25 @@ exports.findAll = function(req, res){
 exports.findById = function(req, res){
     var videoId = req.params.videoId;
     Video.findById(videoId, function(err, video){
-        if(err){
-            
-        }
-        else if(!video){
-            
+        if(err) {
+            var response = {
+                action:'get videos '+videoId,
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get video '+videoId,
+                status:'success',
+                data:video,
+                dataType:'video',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -448,5 +464,4 @@ exports.delete = function(req, res){
         }
     });
 };
-
 

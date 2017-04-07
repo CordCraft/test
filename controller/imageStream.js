@@ -7,15 +7,26 @@ var ImageStream = require("../model/imageStream");
 
 
 exports.findAll = function(req, res){
-    ImageStream.find({}, function(err, imageStreams){
+    return ImageStream.find({}, function(err, imageStreams){
         if(err) {
-            
-        }
-        else if(imageStreams.length === 0){
-            
+            var response = {
+                action:'get all imageStreams',
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get all imageStreams',
+                status:'success',
+                data:imageStreams,
+                dataType:'imageStreamArr',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -24,14 +35,25 @@ exports.findAll = function(req, res){
 exports.findById = function(req, res){
     var imageStreamId = req.params.imageStreamId;
     ImageStream.findById(imageStreamId, function(err, imageStream){
-        if(err){
-            
-        }
-        else if(!imageStream){
-            
+        if(err) {
+            var response = {
+                action:'get imageStreams '+imageStreamId,
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get imageStream '+imageStreamId,
+                status:'success',
+                data:imageStream,
+                dataType:'imageStream',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };

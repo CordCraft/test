@@ -8,15 +8,26 @@ var Employment = require("../model/employment");
 
 
 exports.findAll = function(req, res){
-    Employment.find({}, function(err, employments){
+    return Employment.find({}, function(err, employments){
         if(err) {
-            
-        }
-        else if(employments.length === 0){
-            
+            var response = {
+                action:'get all employments',
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get all employments',
+                status:'success',
+                data:employments,
+                dataType:'employmentArr',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -25,14 +36,25 @@ exports.findAll = function(req, res){
 exports.findById = function(req, res){
     var employmentId = req.params.employmentId;
     Employment.findById(employmentId, function(err, employment){
-        if(err){
-            
-        }
-        else if(!employment){
-            
+        if(err) {
+            var response = {
+                action:'get employments '+employmentId,
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get employment '+employmentId,
+                status:'success',
+                data:employment,
+                dataType:'employment',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -448,5 +470,4 @@ exports.delete = function(req, res){
         }
     });
 };
-
 

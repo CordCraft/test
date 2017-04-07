@@ -1,22 +1,27 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 var Skill = require("../model/skill");
 
 
 exports.findAll = function(req, res){
-    Skill.find({}, function(err, skills){
+    return Skill.find({}, function(err, skills){
         if(err) {
-            
-        }
-        else if(skills.length === 0){
-            
+            var response = {
+                action:'get all skills',
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get all skills',
+                status:'success',
+                data:skills,
+                dataType:'skillArr',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -25,14 +30,25 @@ exports.findAll = function(req, res){
 exports.findById = function(req, res){
     var skillId = req.params.skillId;
     Skill.findById(skillId, function(err, skill){
-        if(err){
-            
-        }
-        else if(!skill){
-            
+        if(err) {
+            var response = {
+                action:'get skills '+skillId,
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            res.status(500).json(response);
+            return null;
         }
         else{
-            
+            var response = {
+                action:'get skill '+skillId,
+                status:'success',
+                data:skill,
+                dataType:'skill',
+                code:200
+            };
+            res.status(200).json(response);
         }
     });
 };
@@ -448,5 +464,4 @@ exports.delete = function(req, res){
         }
     });
 };
-
 
