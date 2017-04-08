@@ -7,6 +7,10 @@ var bodyParser = require('body-parser');
 var dbConfig = require('./config/database');
 
 
+var http = require('http');
+var server = http.createServer(app);
+var io = require('socket.io')(server);
+
 /*
  * USE THIS SETTINGS FOR DEVELOPMENT AND TESTING
  */
@@ -25,23 +29,6 @@ database.connect(dbConfig.local);
  * actions for events. And on disconnection, remove socket as a
  * listener.
  */
-/*
-var io = require('socket.io');
-var Pigeon = require('./model/pigeon');
-io.on("connection", function(socket){
-    socket.on("init_pigeon_listener", function(data){
-        var token = data.token;
-        convertTokenToRoom
-    });
-    io.on("disconnection", function(){
-        //Leave personal room.
-        if
-    });
-    
-});*/
-
-
-
 
 
 
@@ -116,6 +103,10 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+
+
+
 
 
 
@@ -201,5 +192,9 @@ app.use(function(err, req, res, next) {
 });
 */
 
-var http = require('http');
-http.createServer(app).listen(process.env.PORT || 8080);
+
+
+//Add socket as a listener to the accessToken pigeon on connection.
+server.listen(process.env.PORT || 8080);
+
+module.exports = io;

@@ -6,6 +6,7 @@
 
 var express = require('express');
 var authApp = express();
+var io = require('./server');
 var jwt = require('jsonwebtoken');
 var secrets = require('./config/jwt-secret');
 
@@ -243,6 +244,7 @@ function validateUserCredentials(req, res){
                 return false;
             }
             else{
+                io.set("accessToken", accessToken);
                 req.user = user;
                 return user;
             }

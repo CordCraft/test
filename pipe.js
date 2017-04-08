@@ -7,10 +7,15 @@ var http = require('http');
 
 
 
+
 var server = http.createServer(function(req, res){
     res.end("<h1>SERVER STARTED</h1>")
 });
 var io = require('socket.io')(server);
+var e = require('socket.io-emitter')({
+    host:"127.0.0.1",
+    port:6379
+});
 server.listen(5000, function(){
     console.log("sever started");
 });
@@ -28,6 +33,7 @@ function w(){
             console.log(clients); 
         });
         io.to("groupB").emit("message", "tester");
+        e.to("groupB").emit("message", "whyyyyy");
     });
     
 }
