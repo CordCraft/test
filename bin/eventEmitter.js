@@ -36,7 +36,13 @@ module.exports = function(model){
         UPDATE_SUCCESS:"",
         DELETE:"",
         DELETE_FAILED:"",
-        DELETE_SUCCESS:""
+        DELETE_SUCCESS:"",
+        UPLOAD:"",
+        UPLOAD_FAILED:"",
+        UPLOAD_SUCCESS:"",
+        DOWNLOAD:"",
+        DOWNLOAD_FAILED:"",
+        DOWNLOAD_SUCCESS:""
     };
 
 
