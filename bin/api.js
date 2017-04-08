@@ -11,31 +11,31 @@ var api = express();
 
 
 
-var audio = require('./api/audio');
-var basic = require('./api/basic');
-var call = require('./api/call');
-var chat = require('./api/chat');
-var developer = require('./api/developer');
-var device = require('./api/device');
-var education = require('./api/education');
-var employment = require('./api/employment');
-var error = require('./api/error');
-var flowAnalysis = require('./api/flowAnalysis');
-var geoSuccess = require('./api/geoSuccess');
-var image = require('./api/image');
-var interest = require('./api/interest');
-var linearSuccess = require('./api/linearSuccess');
-var log = require('./api/log');
-var network = require('./api/network');
-var notification = require('./api/notification');
-var order = require('./api/order');
-var profile = require('./api/profile');
-var proximity = require('./api/proximity');
-var quote = require('./api/quote');
-var search = require('./api/search');
-var skill = require('./api/skill');
-var user = require('./api/user');
-var video = require('./api/video');
+var audio = require('../api/audio');
+var basic = require('../api/basic');
+var call = require('../api/call');
+var chat = require('../api/chat');
+var developer = require('../api/developer');
+var device = require('../api/device');
+var education = require('../api/education');
+var employment = require('../api/employment');
+var error = require('../api/error');
+var flowAnalysis = require('../api/flowAnalysis');
+var geoSuccess = require('../api/geoSuccess');
+var image = require('../api/image');
+var interest = require('../api/interest');
+var linearSuccess = require('../api/linearSuccess');
+var log = require('../api/log');
+var network = require('../api/network');
+var notification = require('../api/notification');
+var order = require('../api/order');
+var profile = require('../api/profile');
+var proximity = require('../api/proximity');
+var quote = require('../api/quote');
+var search = require('../api/search');
+var skill = require('../api/skill');
+var user = require('../api/user');
+var video = require('../api/video');
 
 
 

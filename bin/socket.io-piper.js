@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 module.exports = function(namespace){
-    var e = require("../event"+namespace);
+    var events = require("./piper")(namespace);
     var io = require("../server");
     var model = io.of(namespace);
     //Change to null for production;
@@ -19,7 +19,7 @@ module.exports = function(namespace){
     
     //contains all model events.
     function e(){
-        return e;
+        return events;
     }
     
     

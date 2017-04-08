@@ -6,9 +6,9 @@
 
 var express = require('express');
 var authApp = express();
-var io = require('./server');
+var io = require('../server');
 var jwt = require('jsonwebtoken');
-var secrets = require('./config/jwt-secret');
+var secrets = require('../config/jwt-secret');
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
@@ -20,13 +20,13 @@ var TwitterStrategy = require('passport-twitter');
 var InstagramStrategy = require('passport-instagram');
 
 
-var User = require('./model/user');
-var AccessToken = require('./model/accessToken');
-var Developer = require('./model/developer');
-var Admin = require('./model/admin');
+var User = require('../model/user');
+var AccessToken = require('../model/accessToken');
+var Developer = require('../model/developer');
+var Admin = require('../model/admin');
 
 
-var access = require('./config/accessType');
+var access = require('../config/accessType');
 
 
 
@@ -381,10 +381,10 @@ exports.validateAccess = function(req, res){
 
 
 
-var Network = require('./model/network');
-var Admin = require('./model/admin');
-var access = require('./config/accessType');
-var jChecker = require('./config/jawad');
+var Network = require('../model/network');
+var Admin = require('../model/admin');
+var access = require('../config/accessType');
+var jChecker = require('../config/jawad');
 exports.classifyAccessor = function(userId, accessorId, callback){
     if(jChecker.checkIfJawad(accessorId)){
         var accessType = access.JAWAD;

@@ -14,7 +14,7 @@ var io = require('socket.io')(server);
 /*
  * USE THIS SETTINGS FOR DEVELOPMENT AND TESTING
  */
-var database = require('./database');
+var database = require('../bin/database');
 //USE FOR LOCAL TESTING
 //database.connect(dbConfig.local);
 //USE FOR LOCAL DEVELOPMENT AND TESTING

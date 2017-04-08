@@ -12,7 +12,7 @@ var emitter = new events.EventEmitter();
 
 module.exports = function(model){
     
-    var action = require('../actions'+model);
+    var action = require('./action')(model);
 
 
     var  event= {
