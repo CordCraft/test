@@ -7,18 +7,17 @@ var bodyParser = require('body-parser');
 var dbConfig = require('./config/database');
 
 
-var http = require('http');
-var server = http.createServer(app);
-var io = require('socket.io')(server);
+
+
 
 /*
  * USE THIS SETTINGS FOR DEVELOPMENT AND TESTING
  */
-var database = require('../bin/database');
+var database = require('./bin/database');
 //USE FOR LOCAL TESTING
 //database.connect(dbConfig.local);
 //USE FOR LOCAL DEVELOPMENT AND TESTING
-database.connect(dbConfig.local);
+database.connect(dbConfig.localTest);
 //USE FOR CLOUD DEVELOPMENT AND TESTING
 ////database.connect(dbConfig.cloudTest);
 
@@ -36,8 +35,9 @@ database.connect(dbConfig.local);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var api = require('./api');
-var auth = require('./auth');
+var proximity = require('./proximity');
+var api = require('./bin/app');
+var auth = require('./bin/auth');
 var populate = require('./populate');
 
 
@@ -65,6 +65,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // application middlewares
 app.use('/', routes);
 app.use('/users', users);
+app.use('/proximity', proximity);
 app.use('/api', api);
 app.use('/auth', auth);
 app.use('/populate', populate);
@@ -193,8 +194,9 @@ app.use(function(err, req, res, next) {
 */
 
 
-
+var http = require('http');
+var server = http.createServer(app);
+var io = require('socket.io')(server);
 //Add socket as a listener to the accessToken pigeon on connection.
 server.listen(process.env.PORT || 8080);
-
 module.exports = io;

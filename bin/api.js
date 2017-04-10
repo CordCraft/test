@@ -3,81 +3,121 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
-
 var express = require('express');
-var api = express();
+  
+module.exports = function(modelNamespace){
+    var modelApp = express(); 
+    var modelCtrl = new require('../bin/controller')(modelNamespace);
 
 
 
-var audio = require('../api/audio');
-var basic = require('../api/basic');
-var call = require('../api/call');
-var chat = require('../api/chat');
-var developer = require('../api/developer');
-var device = require('../api/device');
-var education = require('../api/education');
-var employment = require('../api/employment');
-var error = require('../api/error');
-var flowAnalysis = require('../api/flowAnalysis');
-var geoSuccess = require('../api/geoSuccess');
-var image = require('../api/image');
-var interest = require('../api/interest');
-var linearSuccess = require('../api/linearSuccess');
-var log = require('../api/log');
-var network = require('../api/network');
-var notification = require('../api/notification');
-var order = require('../api/order');
-var profile = require('../api/profile');
-var proximity = require('../api/proximity');
-var quote = require('../api/quote');
-var search = require('../api/search');
-var skill = require('../api/skill');
-var user = require('../api/user');
-var video = require('../api/video');
+    modelApp.get('/', modelCtrl.findAll);
+    
+    
+    modelApp.get('/proximity0', modelCtrl.find0);
+    
+    
+    modelApp.get('/proximity1', modelCtrl.find1);
+    
+    
+    modelApp.get('/proximity2', modelCtrl.find2);
+    
+    
+    modelApp.get('/proximity3', modelCtrl.find3);
 
 
-
-api.use('/audios', audio);
-api.use('/basics', basic);
-api.use('/calls', call);
-api.use('/chats', chat);
-api.use('/developers', developer);
-api.use('/devices', device);
-api.use('/educations', education);
-api.use('/employments', employment);
-api.use('/errors', error);
-api.use('/flowAnalysis', flowAnalysis);
-api.use('/geoSuccesses', geoSuccess);
-api.use('/images', image);
-api.use('/interests', interest);
-api.use('/linearSuccesses', linearSuccess);
-api.use('/logs', log);
-api.use('/networks', network);
-api.use('/notifications', notification);
-api.use('/orders', order);
-api.use('/profiles', profile);
-api.use('/proximities', proximity);
-api.use('/quotes', quote);
-api.use('/searches', search);
-api.use('/skills', skill);
-api.use('/users', user);
-api.use('/videos', video);
+    modelApp.get('/by/userId', modelCtrl.findByUserId);
 
 
-api.all('/', function(req, res){
-    res.json({
-        status:"success"
-    });
-});
-
-module.exports = api;
+    modelApp.get('/by/userIds', modelCtrl.findByUserIds);
 
 
+    modelApp.get('/all/proximity', modelCtrl.findAllProximity);
 
 
+    modelApp.get('/all/proximity/zero', modelCtrl.findAllProximityZero);
 
 
+    modelApp.get('/all/proximity/first', modelCtrl.findAllProximityFirst);
+
+
+    modelApp.get('/all/proximity/second', modelCtrl.findAllProximitySecond);
+
+
+    modelApp.get('/all/proximity/third', modelCtrl.findAllProximityThird);
+
+
+    modelApp.get('/selected/proximity', modelCtrl.findSelectedProximity);
+
+
+    modelApp.get('/selected/proximity/zero', modelCtrl.findSelectedProximityZero);
+
+
+    modelApp.get('/selected/proximity/first', modelCtrl.findSelectedProximityFirst);
+
+
+    modelApp.get('/selected/proximity/second', modelCtrl.findSelectedProximitySecond);
+
+
+    modelApp.get('/selected/proximity/third', modelCtrl.findSelectedProximityThird);
+
+
+    modelApp.get('/my/proximity', modelCtrl.findMyProximity);
+
+
+    modelApp.get('/my/proximity/zero', modelCtrl.findMyProximityZero);
+
+
+    modelApp.get('/my/proximity/first', modelCtrl.findMyProximityFirst);
+
+
+    modelApp.get('/my/proximity/second', modelCtrl.findMyProximitySecond);
+
+
+    modelApp.get('/my/proximity/third', modelCtrl.findMyProximityThird);
+
+
+    modelApp.get('/by/:userId/proximity', modelCtrl.findByProximity);
+
+
+    modelApp.get('/by/:userId/proximity/zero', modelCtrl.findByProximityZero);
+
+
+    modelApp.get('/by/:userId/proximity/first', modelCtrl.findByProximityFirst);
+
+
+    modelApp.get('/by/:userId/proximity/second', modelCtrl.findByProximitySecond);
+
+
+    modelApp.get('/by/:userId/proximity/third', modelCtrl.findByProximityThird);
+
+
+    modelApp.get('/:modelId', modelCtrl.findById);
+
+
+    modelApp.post('/', modelCtrl.create);
+
+
+    modelApp.put('/play()', modelCtrl.update);
+
+
+    modelApp.put('/pause()', modelCtrl.update);
+
+
+    modelApp.put('/resumeAt(/:time)', modelCtrl.update);
+
+
+    modelApp.put('/stop()', modelCtrl.update);
+
+
+    modelApp.put('/:modelId', modelCtrl.update);
+
+
+    modelApp.delete('/:modelId', modelCtrl.delete);
+    
+    
+    return modelApp;
+
+};
 
 

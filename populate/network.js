@@ -12,7 +12,7 @@ var app = require('express')();
 
 
 function genNet(user, users){
-    var x = genRand(0, 100);
+    var x = genRand(0, users.length);
     var user2 = users[x];
     if(user._id !== user2._id){
         var confirmed = faker.random.boolean();
@@ -27,7 +27,7 @@ function genNet(user, users){
                 if((err.name == "MongoError") && err.code == 11000){
                     return genNet(user, users);
                 }
-                else throw err;
+                else console.log(err);
             }
             return console.log(network);
         });

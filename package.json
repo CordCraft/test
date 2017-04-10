@@ -16,6 +16,9 @@
         "express": "~4.13.4",
         "rand-token":"",
         "mongoose":"",
+        "mongoose-easy-types":"",
+        "mongoose-paginater":"",
+        "mongoosastic":"",
         "faker":"",
         "jade": "~1.11.0",
         "less-middleware": "1.0.x",
@@ -33,6 +36,7 @@
         "passport-twitter":"",
         "passport-google":"",
         "passport-instagram":"",
-        "passport-linkedin":""
+        "passport-linkedin":"",
+        "bluebird":""
     }
 }

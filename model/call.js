@@ -5,3 +5,23 @@
  */
 
 
+var mongoose = require('mongoose');
+
+
+var callSchema = mongoose.Schema({
+    bond:{type:String, unique:true},
+    talks:[{
+        userId:String,
+        length:Number,
+        status:Boolean,
+        time:{
+            type:Date, default:Date.now()
+        }
+    }]
+});
+
+
+var Call = mongoose.model("Call", callSchema);
+
+
+module.exports = Call;

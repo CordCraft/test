@@ -5,3 +5,23 @@
  */
 
 
+var mongoose = require('mongoose');
+
+
+var chatSchema = mongoose.Schema({
+    bond:{type:Array, unique:true},
+    messages:[{
+        userId:String,
+        message:String,
+        status:Boolean,
+        time:{
+            type:Date, default:Date.now()
+        }
+    }]
+});
+
+
+var Chat = mongoose.model("Chat", chatSchema);
+
+
+module.exports = Chat;

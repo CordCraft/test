@@ -9,12 +9,11 @@ var Proximity = require("./proximity");
 
 var logSchema = mongoose.Schema({
     userId:String,
-    length:Number,
-    src:String,
-    coverImage:String,
-    description:String,
-    title:String,
-    accessType:String
+    actions:[{
+        action:String,
+        model:String,
+        modelId:String
+    }]
 });
 
 

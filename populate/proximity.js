@@ -19,10 +19,10 @@ function genProximity(req, res){
         users.forEach(function(user){
             var proximity = new Proximity({
                 userId:user._id,
-                stream: genStream(users)
+                proximiters: genUserArr(users)
             });
             proximity.save(function(err, proximity){
-                if(err) throw err;
+                if(err) console.log(err);
                 console.log(JSON.stringify(proximity));
             });
         });
@@ -85,7 +85,12 @@ function genStream(users){
 
 app.get('/', genProximity);
 
-
+app.get('/find', function(req, res){
+    Proximity.find({}, function(err, proximity){
+        if(err) res.status(400).json(err);
+        res.json(proximity)
+    })
+})
 
 
 module.exports = app;
