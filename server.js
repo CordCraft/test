@@ -17,9 +17,9 @@ var database = require('./bin/database');
 //USE FOR LOCAL TESTING
 //database.connect(dbConfig.local);
 //USE FOR LOCAL DEVELOPMENT AND TESTING
-database.connect(dbConfig.localTest);
+//database.connect(dbConfig.localTest);
 //USE FOR CLOUD DEVELOPMENT AND TESTING
-////database.connect(dbConfig.cloudTest);
+database.connect(dbConfig.cloudTest);
 
 
 
@@ -35,7 +35,6 @@ database.connect(dbConfig.localTest);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var proximity = require('./proximity');
 var api = require('./bin/app');
 var auth = require('./bin/auth');
 var populate = require('./populate');
@@ -65,7 +64,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // application middlewares
 app.use('/', routes);
 app.use('/users', users);
-app.use('/proximity', proximity);
 app.use('/api', api);
 app.use('/auth', auth);
 app.use('/populate', populate);
