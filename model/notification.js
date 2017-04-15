@@ -3,25 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 var mongoose = require("mongoose");
-var Proximity = require("./proximity");
+var Proximity = require("./profile");
 
 
 var notificationSchema = mongoose.Schema({
-    userId:String,
-    length:Number,
-    src:String,
-    coverImage:String,
-    description:String,
-    title:String,
-    accessType:String
+    userId:{type:mongoose.Schema.Types.ObjectId, ref:"Profile"},
+    actions:[{
+        event:String,
+        data:Object,
+        createdAt:Object
+    }]
 });
 
 

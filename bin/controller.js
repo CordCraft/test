@@ -13,11 +13,12 @@ module.exports = function(modelNamespace){
     var event = require("./piper-event")(modelNamespace);
     var emitter = event.emitter;
     
-    var userId = "58e61f5a8121902018cca7c8";
+    var userId = "58f0e5db44be2b0e388c91d5";
+
+
 
     this.respond = function(event, response){
         emitter(event, response);
-        console.log(response);
         this.response.status(response.code).json(response);
     };
 
@@ -26,184 +27,200 @@ module.exports = function(modelNamespace){
         this.request = req;
         this.response = res;
         emitter(event.FIND_ALL, "");
-        return Model.find({}, function(err, models){
-            if(err) {
-                var response = {
-                    action:'get all '+modelNamespace+'s',
-                    status:'failed',
-                    reason:err,
-                    code:500
-                };
-                this.respond(event.FIND_ALL_FAILED, response);
-                return null;
-            }
-            else{
-                var response = {
-                    action:'get all '+modelNamespace+'s',
-                    status:'success',
-                    data:models,
-                    dataType:modelNamespace+'s',
-                    code:200
-                };
-                this.respond(event.FIND_ALL_SUCCESS, response);
-            }
+        return Model.find({}).then(function(models){
+            var response = {
+                action:'get all '+modelNamespace+'s',
+                status:'success',
+                data:models,
+                dataType:modelNamespace+'s',
+                code:200
+            };
+            this.respond(event.FIND_ALL_SUCCESS, response);
+        }).catch(function(err){
+            var response = {
+                action:'get all '+modelNamespace+'s',
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            this.respond(event.FIND_ALL_FAILED, response);
+            return null;
         });
     };
     
     
-    this.find0 = function(req, res){
+    this.findAllByUserId = function(req, res){
         this.request = req;
         this.response = res;
-        emitter(event.FIND_ALL, "");
-        return Model.find0({}, function(err, models){
-            if(err) {
-                var response = {
-                    action:'get all '+modelNamespace+'s',
-                    status:'failed',
-                    reason:err,
-                    code:500
-                };
-                this.respond(event.FIND_ALL_FAILED, response);
-                return null;
-            }
-            else{
-                var response = {
-                    action:'get all '+modelNamespace+'s',
-                    status:'success',
-                    data:models,
-                    dataType:modelNamespace+'s',
-                    code:200
-                };
-                this.respond(event.FIND_ALL_SUCCESS, response);
-            }
-        });
-    };
-    
-    
-    
-    
-    this.find1 = function(req, res){
-        this.request = req;
-        this.response = res;
-        this.pagination = req.param('pagination');
-        emitter(event.FIND_ALL, "");
-        return Model.find1({userId:"58ea93a22af3f61f44e9368f"}, this.pagination, function(err, models){
-            if(err) {
-                var response = {
-                    action:'get all '+modelNamespace+'s',
-                    status:'failed',
-                    reason:err,
-                    code:500
-                };
-                this.respond(event.FIND_ALL_FAILED, response);
-                return null;
-            }
-            else{
-                var response = {
-                    action:'get all '+modelNamespace+'s',
-                    status:'success',
-                    data:models,
-                    dataType:modelNamespace+'s',
-                    code:200
-                };
-                this.respond(event.FIND_ALL_SUCCESS, response);
-            }
-        });
-    };
-    
-    
-    
-    
-    this.find2 = function(req, res){
-        this.request = req;
-        this.response = res;
-        emitter(event.FIND_ALL, "");
-        return Model.find2({userId:userId}, function(err, models){
-            if(err) {
-                var response = {
-                    action:'get all '+modelNamespace+'s',
-                    status:'failed',
-                    reason:err,
-                    code:500
-                };
-                this.respond(event.FIND_ALL_FAILED, response);
-                return null;
-            }
-            else{
-                var response = {
-                    action:'get all '+modelNamespace+'s',
-                    status:'success',
-                    data:models,
-                    dataType:modelNamespace+'s',
-                    code:200
-                };
-                this.respond(event.FIND_ALL_SUCCESS, response);
-            }
-        });
-    };
-    
-    
-    
-    
-    this.find3 = function(req, res){
-        this.request = req;
-        this.response = res;
-        emitter(event.FIND_ALL, "");
-        return Model.find3({userId:userId}, function(err, models){
-            if(err) {
-                var response = {
-                    action:'get all '+modelNamespace+'s',
-                    status:'failed',
-                    reason:err,
-                    code:500
-                };
-                this.respond(event.FIND_ALL_FAILED, response);
-                return null;
-            }
-            else{
-                var response = {
-                    action:'get all '+modelNamespace+'s',
-                    status:'success',
-                    data:models,
-                    dataType:modelNamespace+'s',
-                    code:200
-                };
-                this.respond(event.FIND_ALL_SUCCESS, response);
-            }
-        });
-    };
-    
-    
-
-
-    this.findById = function(req, res){
-        var modelId = req.params.modelId;
         emitter(event.FIND_BY_ID, "");
-        Model.findById(modelId, function(err, model){
-            if(err) {
+        var query = Model.findByUserId(req.conditions);
+        query.then(function(models){
+            var response = {
+                action:'get all '+modelNamespace+'s',
+                status:'success',
+                data:models,
+                dataType:modelNamespace+'s',
+                code:200
+            };
+            this.respond(event.FIND_ALL_SUCCESS, response);
+        }).catch(function(err){
+            var response = {
+                action:'get all '+modelNamespace+'s',
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            this.respond(event.FIND_ALL_FAILED, response);
+            return null;
+        });
+    };
+    
+    
+    this.proximity0 = function(req, res){
+        this.request = req;
+        this.response = res;
+        emitter(event.FIND_ALL, "");
+        console.log(req.params.userId);
+        return Model.proximity0(req.params)
+            .then(function(models){
+            var response = {
+                action:'get all '+modelNamespace+'s',
+                status:'success',
+                data:models,
+                dataType:modelNamespace+'s',
+                code:200
+            };
+            this.respond(event.FIND_ALL_SUCCESS, response);
+        }).catch(function(err){
+            var response = {
+                action:'get all '+modelNamespace+'s',
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            this.respond(event.FIND_ALL_FAILED, response);
+        });
+    };
+    
+    
+    
+    
+    this.proximity1 = function(req, res){
+        //var conditions = request.param;
+        //this.pagination = req.param('pagination');
+        this.request = req;
+        this.response = res;
+        emitter(event.FIND_ALL, "");
+        return Model.proximity1(req.params)
+            .then(function(models){
+            var response = {
+                action:'get all '+modelNamespace+'s',
+                status:'success',
+                data:models,
+                dataType:modelNamespace+'s',
+                code:200
+            };
+            this.respond(event.FIND_ALL_SUCCESS, response);
+        }).catch(function(err){
+            console.log(err);
+            var response = {
+                action:'get all '+modelNamespace+'s',
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            this.respond(event.FIND_ALL_FAILED, response);
+        });
+    };
+    
+    
+    
+    
+    this.proximity2 = function(req, res){
+        this.request = req;
+        this.response = res;
+        emitter(event.FIND_ALL, "");
+        return Model.proximity2(req.params)
+            .then(function(models){
+            var response = {
+                action:'get all '+modelNamespace+'s',
+                status:'success',
+                data:models,
+                dataType:modelNamespace+'s',
+                code:200
+            };
+            this.respond(event.FIND_ALL_SUCCESS, response);
+        }).catch(function(err){
                 var response = {
-                    action:'get '+modelNamespace+' '+modelId,
+                    action:'get all '+modelNamespace+'s',
                     status:'failed',
                     reason:err,
                     code:500
                 };
-                emitter(event.FIND_BY_ID, "");
-                res.status(500).json(response);
+                this.respond(event.FIND_ALL_FAILED, response);
                 return null;
-            }
-            else{
-                var response = {
-                    action:'get '+modelNamespace+' '+modelId,
-                    status:'success',
-                    data:model,
-                    dataType:modelNamespace,
-                    code:200
-                };
-                emitter(event.FIND_BY_ID, "");
-                res.status(200).json(response);
-            }
         });
     };
+    
+    
+    
+    
+    this.proximity3 = function(req, res){
+        this.request = req;
+        this.response = res;
+        emitter(event.FIND_ALL, "");
+        return Model.proximity3(req.params)
+        .then(function(models){
+            var response = {
+                action:'get all '+modelNamespace+'s',
+                status:'success',
+                data:models,
+                dataType:modelNamespace+'s',
+                code:200
+            };
+            this.respond(event.FIND_ALL_SUCCESS, response);
+        }).catch(function(err){
+                var response = {
+                    action:'get all '+modelNamespace+'s',
+                    status:'failed',
+                    reason:err,
+                    code:500
+                };
+                this.respond(event.FIND_ALL_FAILED, response);
+                return null;
+        });
+    };
+    
+   
+   
+   
+    this.findById = function(req, res){
+        emitter(event.FIND_BY_ID, "");
+        var query = Model.findById(req.conditions);
+        query.then(function(model){
+            var response = {
+                action:'get '+modelNamespace+' '+req.conditions.modelId,
+                status:'success',
+                data:model,
+                dataType:modelNamespace,
+                code:200
+            };
+            emitter(event.FIND_BY_ID, "");
+            res.status(200).json(response);
+        }).catch(function(err){
+            var response = {
+                action:'get '+modelNamespace+' '+req.conditions.modelId,
+                status:'failed',
+                reason:err,
+                code:500
+            };
+            emitter(event.FIND_BY_ID, "");
+            res.status(500).json(response);
+            return null;
+        });
+    };
+
+
 
     this.findByIds = function(req, res){
         var modelIds = req.params.modelIds;
@@ -219,21 +236,28 @@ module.exports = function(modelNamespace){
             }
         });
     };
+    
+    
 
     this.findByUserId = function(req, res){
         var userId = req.params.userId;
         Model.findByUserId(userId, function(err, models){
             if(err){
 
+
             }
             else if(!models){
 
+
             }
             else{
-
+                
+                
             }
         });
     };
+    
+    
 
     this.findByUserIds = function(req, res){
         var userIds = req.params.userIds;
@@ -249,6 +273,8 @@ module.exports = function(modelNamespace){
             }
         });
     };
+    
+
 
     this.findByProximity = function(req, res){
         var userId = req.params.userId;
@@ -264,6 +290,7 @@ module.exports = function(modelNamespace){
             }
         });
     };
+
 
     this.findByProximityZero = function(req, res){
         var userId = req.params.userId;

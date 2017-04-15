@@ -4,15 +4,15 @@
  * and open the template in the editor.
  */
 var mongoose = require("mongoose");
-var Proximity = require("./proximity");
+var Proximity = require("./profile");
 
 
 var logSchema = mongoose.Schema({
-    userId:String,
+    userId:{type:mongoose.Schema.Types.ObjectId, ref:"Profile"},
     actions:[{
-        action:String,
-        model:String,
-        modelId:String
+        event:String,
+        data:Object,
+        createdAt:Object
     }]
 });
 

@@ -4,25 +4,40 @@
  * and open the template in the editor.
  */
 
-var mongoose = require('mongoose');
-var Type = require('mongoose-easy-types').Types;
+var mongoose = require("mongoose");
+var Type = require("mongoose-easy-types").Types;
 
+
+/*
+ * 
+ */
 var proximitySchema = mongoose.Schema({
-    userId:{
-        type:String, 
-        ref:"User",
-        unique:true
-    },
-    time:{type:Date, default:Date.now},
-    proximiters:[{
-        type:String
-    }]
+    bond:[{type:mongoose.Schema.Types.ObjectId, ref:"Profile"}],
+    confirmed:Type.random.boolean(),
+    createdAt:{type:Date, default:Date.now},
+    endedAt:Date
 });
+
+
+proximitySchema.statics.findByBond = function(conditions){
+    return this.find({bond:conditions.bond});
+}
+
+proximitySchema.statics.findByUserId = function(conditions){
+    return this.find({bond:{$elemMatch: {$eq:conditions.userId}}});
+}
+
+
+/*
+ * 
+ */
 
 
 
 
 var Proximity = mongoose.model("Proximity", proximitySchema);
+
+
 
 
 module.exports = Proximity;

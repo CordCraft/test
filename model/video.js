@@ -11,7 +11,7 @@
  * and open the template in the editor.
  */
 var mongoose = require("mongoose");
-var Proximity = require("./proximity");
+var Proximity = require("./profile");
 
 
 var videoSchema = mongoose.Schema({

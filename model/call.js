@@ -6,16 +6,16 @@
 
 
 var mongoose = require('mongoose');
-
+var Type = require("mongoose-easy-types").Types;
 
 var callSchema = mongoose.Schema({
-    bond:{type:String, unique:true},
-    talks:[{
-        userId:String,
-        length:Number,
-        status:Boolean,
+    bond:[{type:mongoose.Schema.Types.ObjectId, ref:"Profile"}],
+    interactions:[{
+        userId:{ref:"Profile", type:mongoose.Schema.Types.ObjectId},
+        length:Type.random.number(),
+        status:Type.random.boolean(),
         time:{
-            type:Date, default:Date.now()
+            type:Date, default:Date.now
         }
     }]
 });

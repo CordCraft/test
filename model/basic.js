@@ -4,17 +4,12 @@
  * and open the template in the editor.
  */
 var mongoose = require("mongoose");
-var Proximity = require("./proximity");
 
 
 var basicSchema = mongoose.Schema({
-    userId:String,
-    length:Number,
-    src:String,
-    coverImage:String,
-    description:String,
-    title:String,
-    accessType:String
+    dob:Date,
+    relationshipStatus:String,
+    gender:String
 });
 
 
@@ -49,59 +44,6 @@ basicSchema.statics.findByUserIds = function(userIds, accessorId, callback){
 };
 
 
-basicSchema.statics.findByProximityZero = function(userId, accessorId, callback){
-    return Proximity.getProximityZero(userId, function(err, proximiters){
-        if(err) callback(err);
-        else{
-            var proximitersUserId = proximiters.userIds;
-            this.findByUserIds(proximitersUserId, accessorId, callback);
-        }
-    });
-};
-
-
-basicSchema.statics.findByProximityFirst = function(userId, accessorId, callback){
-    return Proximity.getProximityFirst(userId, function(err, proximiters){
-        if(err) callback(err);
-        else{
-            var proximitersUserId = proximiters.userIds;
-            this.findByUserIds(proximitersUserId, accessorId, callback);
-        }
-    });
-};
-
-
-basicSchema.statics.findByProximitySecond = function(userId, accessorId, callback){
-    return Proximity.getProximitySecond(userId, function(err, proximiters){
-        if(err) callback(err);
-        else{
-            var proximitersUserId = proximiters.userIds;
-            this.findByUserIds(proximitersUserId, accessorId, callback);
-        }
-    });
-};
-
-
-basicSchema.statics.findByProximityThird = function(userId, accessorId, callback){
-    return Proximity.getProximityThird(userId, function(err, proximiters){
-        if(err) callback(err);
-        else{
-            var proximitersUserId = proximiters.userIds;
-            this.findByUserIds(proximitersUserId, accessorId, callback);
-        }
-    });
-};
-
-
-basicSchema.statics.findByProximity = function(userId, callback){
-    return Proximity.getProximity(userId, function(err, proximiters){
-        if(err) callback(err);
-        else{
-            var proximitersUserId = proximiters.userIds;
-            this.findByUserIds(proximitersUserId, callback);
-        }
-    });
-};
 
 
 

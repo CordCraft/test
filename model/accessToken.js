@@ -13,6 +13,8 @@ var SECRET_LENGTH = 16;
 var accessTokenSchema = mongoose.Schema({
     token:String,
     accessId:String,
+    userId:String,
+    authId:String,
     secret:String
 });
 

@@ -16,6 +16,17 @@ var networkSchema = mongoose.Schema({
     time:Type.date.future()
 });
 
+
+networkSchema.statics.findByBond = function(conditions){
+    return this.find({bond:conditions.bond});
+}
+
+networkSchema.statics.findByUserId = function(conditions){
+    return this.find({bond:{$elemMatch: {$eq:conditions.userId}}});
+}
+
+
+
 networkSchema.statics.getConfirmedNetworksByUserId = function(userId, callback){
     return this.find({bond:{$or:userId}},{confirmed:true}, function(networks){
         

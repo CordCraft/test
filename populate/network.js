@@ -6,42 +6,42 @@
 
 
 var Network = require('../model/network');
-var User = require('../model/user');
+var Profile = require('../model/profile');
 var faker = require('faker');
 var app = require('express')();
 
 
-function genNet(user, users){
-    var x = genRand(0, users.length);
-    var user2 = users[x];
-    if(user._id !== user2._id){
+function genNet(profile, profiles){
+    var x = genRand(0, profiles.length);
+    var profile2 = profiles[x];
+    if(profile._id !== profile2._id){
         var confirmed = faker.random.boolean();
         var network = new Network({
-            bond:[user._id,user2._id ],
+            bond:[profile._id,profile2._id ],
             confirmed:confirmed,
             shared: (confirmed?faker.random.boolean():false),
             meet:faker.random.boolean()
         });
         network.save(function(err, network){
             if(err){
-                if((err.name == "MongoError") && err.code == 11000){
-                    return genNet(user, users);
+                if((err.name === "MongoError") && err.code === 11000){
+                    return genNet(profile, profiles);
                 }
                 else console.log(err);
             }
-            return console.log(network);
+            console.log(network);
         });
     }
     return null;
 }
 
 function genNetwork(req, res){
-    User.find({}, function(err, users){
+    Profile.find({}, function(err, profiles){
         if(err) throw err;
-        users.forEach(function(user){
+        profiles.forEach(function(profile){
             var size = genRand(2,8);
             for(var i = 0; i < size; i++){
-                genNet(user, users);
+                genNet(profile, profiles);
             }
         });
     });
@@ -57,17 +57,12 @@ function genRand(x,y){
 }
 
 
+
+
+
 app.get('/', genNetwork);
 
 
 
 module.exports = app;
 
-
-
-
-
-
-
-
-module.exports = app;

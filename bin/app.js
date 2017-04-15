@@ -11,6 +11,7 @@ var app = express();
 
 var apis = [
     "/audio",
+    "/authentication",
     "/basic",
     "/call", 
     "/chat",
@@ -35,15 +36,26 @@ var apis = [
     "/quote",
     "/search",
     "/skill",
-    "/user",
     "/video"
 ];
 
-apis.forEach(function(api){
+for(var i = 0; i < apis.length; i++){
+    var api = apis[i];
     console.log(api+"\n");
     var apiApp = require("./api")(api);
-    app.use(api, apiApp);
+    app.use("/:userId"+api, setUserId, apiApp);
+}
+app.use("/:userId", function(req, res){
+   res.send(req.params.userId); 
 });
+
+
+function setUserId(req, res, next){
+    req.conditions = req.params;
+    req.fields = req.query;
+    req.object = req.body;
+    return next();
+}
 
 
 app.all('/', function(req, res){

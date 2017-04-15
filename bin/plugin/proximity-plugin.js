@@ -7,115 +7,125 @@
 
 var Network = require("../../model/network");
 var Proximity = require("../../model/proximity");
-
-
-
-var getProximityZeroIds = function(conditions){
-    conditions.userId = Array.isArray(conditions.userId)?
-        conditions.userId:[conditions.userId];
-    conditions.bond = {$in:conditions.userId};
-    var conditions2 = {};
-    conditions2.bond = conditions.bond;
-    return Network.find({});
-};
-
-
-
-
-var getProximityFirstIds = function(conditions){
-    //conditions.userId = Array.isArray(conditions.userId)?
-        //conditions.userId:conditions.userId !== null?[conditions.userId]:{};
-    //conditions.userId = {$in: conditions.userId};
-    return Proximity.find(conditions).then(function(p1s){
-        return p1s[0];
-    });
-};
-
-
-
-var getProximitySecondIds = function(conditions){
-    return getProximityZeroIds(conditions).then(function(p0sId){
-        conditions.userId = p0sId;
-        return getProximityFirstIds(conditions);
-    });
-};
-
-
-var getProximityThirdIds = function(conditions){
-    return getProximityFirstIds(conditions)
-            .then(function(p1Ids){
-        conditions.userId = p1Ids;
-        conditions.shared = true;
-        return getProximityZeroIds(conditions);
-    })
-};
-
-
-
-
-
-
-var ProximityPlugin = function(schema, options){
+var ObjectId = require("mongoose").Types.ObjectId;
+/*
+ * 
+ */
+var ProximityPlugin = function(schema, option){
     
-    schema.statics.find0 = function(conditions, fields, options, callback){
-        var $this = this;
-        return getProximityZeroIds(conditions)
-            .then(function(p0sId){
-            conditions.userId = {$in: p0sId.bond};
-            console.log(conditions);
-            return $this.find(conditions, fields, options, callback);
-        }).catch(function(err){
-            console.log(err);
-        });
+    
+    /*function getLowerAggregateArg(model, conditions){
+        var modelName = model.modelName;
+        console.log(conditions);
+        return [
+            {$match:{bond:{$in:[ObjectId(conditions.userId)]}}},
+            {$unwind:"$bond"},
+            {$match:{bond:{$ne:ObjectId(conditions.userId)}}},
+            {$lookup:{
+                from:modelName.toLowerCase()+"s",
+                localField:"bond",
+                foreignField:"userId",
+                as:modelName.toLowerCase()
+            }}
+        ];
+    }*/
+    
+    function getLowerAggregateArg(model, conditions){
+        var modelName = model.modelName.toLowerCase();
+        project = {};
+        project[modelName] = 1;
+        project['_id'] = 0;
+        return [
+            {$match:{bond:{$in:[ObjectId(conditions.userId)]}}},
+            {$unwind:"$bond"},
+            {$match:{bond:{$ne:ObjectId(conditions.userId)}}},
+            {$lookup:{
+                from:modelName+"s",
+                localField:"bond",
+                foreignField:modelName === "profile"?"_id":"userId",
+                as:modelName
+            }},
+            {$project:project},
+            {$unwind:"$"+modelName}
+        ];
+    }
+    
+    
+    function getUpperAggregateArg(edge, model, conditions){
+        var modelName = model.modelName.toLowerCase();
+        var match = null;
+        match = {bond:{$in:[ObjectId(conditions.userId)]}, confirmed:true};
+        
+        var project = {};
+        project[modelName] = 1;
+        project['bond'] = 1;
+        project['_id'] = 0;
+        return  [
+            {$match:match},
+            {$unwind:"$bond"},
+            {$match:{bond:{$ne:ObjectId(conditions.userId)}}},
+            {$lookup:{
+                from:edge==="proximity"?"proximities":edge+"s",
+                localField:"bond",
+                foreignField:"bond",
+                as:edge
+            }},
+            {$unwind:"$"+edge},
+            {$unwind:"$"+edge+".bond"},
+            edge === "network"?{$match:{'network.shared':true}}:{$match:{'proximity.confirmed':true}},
+            {$redact:{
+                $cond:{
+                    if:{$eq:['$'+edge+'.bond', '$bond'] },
+                    then:"$$PRUNE",
+                    else:"$$KEEP"
+                }
+            }},
+            {$lookup:{
+                from:modelName+"s",
+                localField:edge+".bond",
+                foreignField:modelName === "profile"?"_id":"userId",
+                as:modelName
+            }},
+            {$project:project},
+            {$unwind:"$"+modelName}
+        ];
+    }
+    
+    
+    
+    /*
+     * 
+     */
+    
+    
+    schema.statics.proximity0 = function(conditions){
+        return Network.aggregate(getLowerAggregateArg(this, conditions));
     };
     
-    schema.statics.find1 = function(conditions,pageCond, callback){
-        var $this = this;
-        var result = [];
-        /*return getProximityFirstIds(conditions)
-            .then(function(p1s){
-            conditions.userId = {$in:p1s.proximiters};
-            return $this.paginate(conditions, pageCond)
-                .then(function(model){
-                result.push(model);
-                return model;
-            }).then(function(xx){
-                console.log(result);
-                callback(result)
-            });
-        });*/
-        return getProximityFirstIds(conditions)
-                .then(function(p1s){
-            var condition = {userId:{$in:p1s.proximiters}};
-            return $this.find(condition)
-                    .then(function(models){
-                return models;
-            });
-        }).then(function(models){
-            return callback(null, models);
-        });
+    
+    /*
+     * 
+     */
+    schema.statics.proximity1 = function(conditions){
+        return Proximity.aggregate(getLowerAggregateArg(this, conditions));
     };
     
-    schema.statics.find2 = function(conditions, fields, options, callback){
-        var $this = this;
-        return getProximitySecondIds(conditions)
-            .then(function(p2sId){
-                console.log(p2sId);
-            conditions.userId = {$in:p2sId};
-            return $this.find(conditions, fields, options, callback);
-        });
+    
+    
+    /*
+     * 
+     */
+    schema.statics.proximity2 = function(conditions){
+        return Network.aggregate(getUpperAggregateArg("proximity", this, conditions));
     };
     
-    schema.statics.find3 = function(conditions, fields, options, callback){
-        var $this = this;
-        return getProximityThirdIds(conditions)
-            .then(function(p3sId){
-                console.log(p3sId);
-            conditions.userId = {$in:p3sId};
-            return $this.find(conditions, fields, options, callback);
-        });
-    };
     
+    /*
+     * 
+     */
+    schema.statics.proximity3 = function(conditions){
+        return Proximity.aggregate(getUpperAggregateArg("network", this, conditions));
+    };
 };
 
 

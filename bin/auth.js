@@ -20,7 +20,7 @@ var TwitterStrategy = require('passport-twitter');
 var InstagramStrategy = require('passport-instagram');
 
 
-var User = require('../model/user');
+var Authentication = require('../model/authentication');
 var AccessToken = require('../model/accessToken');
 var Developer = require('../model/developer');
 var Admin = require('../model/admin');
@@ -62,8 +62,8 @@ authApp.use(passport.initialize());
 
 
 authApp.set('validateAppCredentials', validateAppCredentials);
-authApp.set('validateUserCredentials', validateUserCredentials);
-authApp.set('validateAllCredentials', validateAppCredentials, validateUserCredentials);
+authApp.set('validateAuthCredentials', validateAuthCredentials);
+authApp.set('validateAllCredentials', validateAppCredentials, validateAuthCredentials);
 
 
 
@@ -116,10 +116,10 @@ function getHere(req, res){
 
 function login(req, username, password, done){
     if(username && password){
-        User.findOne({'local.username':username}, function(err, user){
+        Authentication.findOne({'local.username':username}, function(err, authentication){
             if(err) throw err;
             //If user doesn't exist in the database: Create new user.
-            if(!user){
+            if(!authentiction){
                 error = {
                     action:"login",
                     status:"failed",
@@ -130,7 +130,7 @@ function login(req, username, password, done){
             }
             //Otherwise, if user exist in the database: Login user.
             else{
-                var passwordIsValid = user.local.password === password;
+                var passwordIsValid = authentication.local.password === password;
                 
                 //If password provided is not valid: Send error.
                 if(!passwordIsValid){
@@ -148,7 +148,7 @@ function login(req, username, password, done){
                 else{
                     var response = {
                         action:'login',
-                        data: user,
+                        data: authentication,
                         dataType:'user',
                         status:'success'
                     };
@@ -206,7 +206,7 @@ function validateAppCredentials(req, res, next){
         
 }
 
-function validateUserCredentials(req, res){
+function validateAuthCredentials(req, res){
     var accessToken = req.accessToken;
     if(!accessToken){
         var response = {

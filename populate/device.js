@@ -6,7 +6,7 @@
 
 
 var Device = require('../model/device');
-var User = require('../model/user');
+var User = require('../model/profile');
 var faker = require('faker');
 var app = require('express')();
 

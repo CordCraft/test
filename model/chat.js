@@ -6,14 +6,15 @@
 
 
 var mongoose = require('mongoose');
+var Type = require("mongoose-easy-types").Types;
 
 
 var chatSchema = mongoose.Schema({
-    bond:{type:Array, unique:true},
+    bond:[{ref:"Profile", type:mongoose.Schema.Types.ObjectId}],
     messages:[{
         userId:String,
-        message:String,
-        status:Boolean,
+        message:Type.lorem.sentence(),
+        status:Type.random.boolean(),
         time:{
             type:Date, default:Date.now()
         }

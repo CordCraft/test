@@ -4,33 +4,45 @@
  * and open the template in the editor.
  */
 
-
 var Proximity = require('../model/proximity');
 var User = require('../model/user');
-var faker = require('faker');
+var Profile = require('../model/profile');
 var app = require('express')();
 
 
+function genProx(user, users){
+    var x = genRand(0, users.length);
+    var user2 = users[x];
+    if(user._id !== user2._id){
+        var proximity = new Proximity({
+            bond:[user._id,user2._id ],
+            confirmed:true
+        });
+        proximity.save(function(err, proximity){
+            if(err){
+                if((err.name === "MongoError") && err.code === 11000){
+                    return genNet(user, users);
+                }
+                else console.log(err);
+            }
+            console.log(proximity);
+        });
+    }
+    return null;
+}
+
 function genProximity(req, res){
-    
-    
-    User.find({},{_id:1}, function(err, users){
+    Profile.find({}, function(err, users){
         if(err) throw err;
         users.forEach(function(user){
-            var proximity = new Proximity({
-                userId:user._id,
-                proximiters: genUserArr(users)
-            });
-            proximity.save(function(err, proximity){
-                if(err) console.log(err);
-                console.log(JSON.stringify(proximity));
-            });
+            var size = genRand(2,8);
+            for(var i = 0; i < size; i++){
+                genProx(user, users);
+            }
         });
     });
-    
     res.status(200).send("done");
-    
-};
+}
 
 
 function genRand(x,y){
@@ -42,55 +54,10 @@ function genRand(x,y){
 
 
 
-function genArr(size){
-    var arr = [];
-    for(var i = 0; i < size; i++){
-        for(var k = 0; k < arr.length || arr.length === 0; k++){
-            temp = genRand(0, 100);
-            if(arr[k] === temp || temp === null) ;
-            else{
-                arr[i] = temp;
-                break;
-            }
-        }
-    }
-    return arr;
-};
-
-function genUserArr(users){
-    var size = genRand(0, 6);
-    var arr = genArr(size);
-    var userArr = [];
-    for(var i = 0; i < arr.length; i++){
-        userArr[i] = users[arr[i]];
-    }
-    return userArr;
-}
-
-
-function genStream(users){
-    var size = genRand(0,20);
-    var stream = [];
-    for(var i = 0; i < size; i++){
-        stream[i] = {
-            time: Date.now(),
-            userIds: genUserArr(users)
-        };
-    }
-    return stream;
-}
-
-
 
 
 app.get('/', genProximity);
 
-app.get('/find', function(req, res){
-    Proximity.find({}, function(err, proximity){
-        if(err) res.status(400).json(err);
-        res.json(proximity)
-    })
-})
 
 
 module.exports = app;
