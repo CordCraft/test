@@ -10,15 +10,20 @@ module.exports = function(modelNamespace){
     var request = null;
     
     var Model = require("../model"+modelNamespace);
-    var event = require("./piper-event")(modelNamespace);
-    var emitter = event.emitter;
     
-    var userId = "58f0e5db44be2b0e388c91d5";
+    
+    function composeResponse(value, modelNamespace, func, code){
+        return {
+            action:func+' '+modelNamespace,
+            status:code === 200? "success Monday":"error",
+            value:value,
+            model:modelNamespace,
+            code:code
+        };
+    }
 
 
-
-    this.respond = function(event, response){
-        emitter(event, response);
+    this.respond = function(response){
         this.response.status(response.code).json(response);
     };
 
@@ -26,24 +31,12 @@ module.exports = function(modelNamespace){
     this.findAll = function(req, res){
         this.request = req;
         this.response = res;
-        emitter(event.FIND_ALL, "");
         return Model.find({}).then(function(models){
-            var response = {
-                action:'get all '+modelNamespace+'s',
-                status:'success',
-                data:models,
-                dataType:modelNamespace+'s',
-                code:200
-            };
-            this.respond(event.FIND_ALL_SUCCESS, response);
+            var response = composeResponse(models, modelNamespace, "get all", 200);
+            this.respond(response);
         }).catch(function(err){
-            var response = {
-                action:'get all '+modelNamespace+'s',
-                status:'failed',
-                reason:err,
-                code:500
-            };
-            this.respond(event.FIND_ALL_FAILED, response);
+            var response = composeResponse(err, modelNamespace, "get all", 500);
+            this.respond(response);
             return null;
         });
     };
@@ -52,53 +45,32 @@ module.exports = function(modelNamespace){
     this.findAllByUserId = function(req, res){
         this.request = req;
         this.response = res;
-        emitter(event.FIND_BY_ID, "");
         var query = Model.findByUserId(req.conditions);
         query.then(function(models){
-            var response = {
-                action:'get all '+modelNamespace+'s',
-                status:'success',
-                data:models,
-                dataType:modelNamespace+'s',
-                code:200
-            };
-            this.respond(event.FIND_ALL_SUCCESS, response);
+            var response = composeResponse(models, modelNamespace, "get all by userId", 200);
+            this.respond(response);
         }).catch(function(err){
-            var response = {
-                action:'get all '+modelNamespace+'s',
-                status:'failed',
-                reason:err,
-                code:500
-            };
-            this.respond(event.FIND_ALL_FAILED, response);
+            var response = composeResponse(err, modelNamespace, "get all by userId", 500);
+            this.respond(response);
             return null;
         });
     };
+    
+    this.findByUserId = function(req, res){
+        
+    }
     
     
     this.proximity0 = function(req, res){
         this.request = req;
         this.response = res;
-        emitter(event.FIND_ALL, "");
-        console.log(req.params.userId);
-        return Model.proximity0(req.params)
+        return Model.proximity0(req.conditions)
             .then(function(models){
-            var response = {
-                action:'get all '+modelNamespace+'s',
-                status:'success',
-                data:models,
-                dataType:modelNamespace+'s',
-                code:200
-            };
-            this.respond(event.FIND_ALL_SUCCESS, response);
+            var response = composeResponse(models, modelNamespace, "get proximity 0", 200);
+            this.respond(response);
         }).catch(function(err){
-            var response = {
-                action:'get all '+modelNamespace+'s',
-                status:'failed',
-                reason:err,
-                code:500
-            };
-            this.respond(event.FIND_ALL_FAILED, response);
+            var response = composeResponse(err, modelNamespace, "get proximity 0", 500);
+            this.respond(response);
         });
     };
     
@@ -110,26 +82,14 @@ module.exports = function(modelNamespace){
         //this.pagination = req.param('pagination');
         this.request = req;
         this.response = res;
-        emitter(event.FIND_ALL, "");
-        return Model.proximity1(req.params)
+        return Model.proximity1(req.conditions)
             .then(function(models){
-            var response = {
-                action:'get all '+modelNamespace+'s',
-                status:'success',
-                data:models,
-                dataType:modelNamespace+'s',
-                code:200
-            };
-            this.respond(event.FIND_ALL_SUCCESS, response);
+            var response = composeResponse(models, modelNamespace, "get proximity 1", 200);
+            this.respond(response);
         }).catch(function(err){
             console.log(err);
-            var response = {
-                action:'get all '+modelNamespace+'s',
-                status:'failed',
-                reason:err,
-                code:500
-            };
-            this.respond(event.FIND_ALL_FAILED, response);
+            var response = composeResponse(err, modelNamespace, "get proximity 1", 500);
+            this.respond(response);
         });
     };
     
@@ -139,25 +99,13 @@ module.exports = function(modelNamespace){
     this.proximity2 = function(req, res){
         this.request = req;
         this.response = res;
-        emitter(event.FIND_ALL, "");
-        return Model.proximity2(req.params)
+        return Model.proximity2(req.conditions)
             .then(function(models){
-            var response = {
-                action:'get all '+modelNamespace+'s',
-                status:'success',
-                data:models,
-                dataType:modelNamespace+'s',
-                code:200
-            };
-            this.respond(event.FIND_ALL_SUCCESS, response);
+            var response = composeResponse(models, modelNamespace, "get proximity 2", 200);
+            this.respond(response);
         }).catch(function(err){
-                var response = {
-                    action:'get all '+modelNamespace+'s',
-                    status:'failed',
-                    reason:err,
-                    code:500
-                };
-                this.respond(event.FIND_ALL_FAILED, response);
+                var response = composeResponse(err, modelNamespace, "get proximity 2", 500);
+                this.respond(response);
                 return null;
         });
     };
@@ -168,25 +116,13 @@ module.exports = function(modelNamespace){
     this.proximity3 = function(req, res){
         this.request = req;
         this.response = res;
-        emitter(event.FIND_ALL, "");
-        return Model.proximity3(req.params)
+        return Model.proximity3(req.conditions)
         .then(function(models){
-            var response = {
-                action:'get all '+modelNamespace+'s',
-                status:'success',
-                data:models,
-                dataType:modelNamespace+'s',
-                code:200
-            };
-            this.respond(event.FIND_ALL_SUCCESS, response);
+            var response = composeResponse(models, modelNamespace, "get proximity 3", 200);
+            this.respond(response);
         }).catch(function(err){
-                var response = {
-                    action:'get all '+modelNamespace+'s',
-                    status:'failed',
-                    reason:err,
-                    code:500
-                };
-                this.respond(event.FIND_ALL_FAILED, response);
+                var response = composeResponse(err, modelNamespace, "get proximity 3", 500);
+                this.respond(response);
                 return null;
         });
     };
@@ -195,26 +131,14 @@ module.exports = function(modelNamespace){
    
    
     this.findById = function(req, res){
-        emitter(event.FIND_BY_ID, "");
+        this.request = req;
+        this.response = res;
         var query = Model.findById(req.conditions);
         query.then(function(model){
-            var response = {
-                action:'get '+modelNamespace+' '+req.conditions.modelId,
-                status:'success',
-                data:model,
-                dataType:modelNamespace,
-                code:200
-            };
-            emitter(event.FIND_BY_ID, "");
+            var response = composeResponse(model, modelNamespace, "get one by id", 200);
             res.status(200).json(response);
         }).catch(function(err){
-            var response = {
-                action:'get '+modelNamespace+' '+req.conditions.modelId,
-                status:'failed',
-                reason:err,
-                code:500
-            };
-            emitter(event.FIND_BY_ID, "");
+            var response = composeResponse(err, modelNamespace, "get one by id", 500);
             res.status(500).json(response);
             return null;
         });
@@ -237,27 +161,6 @@ module.exports = function(modelNamespace){
         });
     };
     
-    
-
-    this.findByUserId = function(req, res){
-        var userId = req.params.userId;
-        Model.findByUserId(userId, function(err, models){
-            if(err){
-
-
-            }
-            else if(!models){
-
-
-            }
-            else{
-                
-                
-            }
-        });
-    };
-    
-    
 
     this.findByUserIds = function(req, res){
         var userIds = req.params.userIds;
@@ -273,391 +176,52 @@ module.exports = function(modelNamespace){
             }
         });
     };
-    
-
-
-    this.findByProximity = function(req, res){
-        var userId = req.params.userId;
-        Model.findById(userId, function(err, model){
-            if(err){
-
-            }
-            else if(!model){
-
-            }
-            else{
-
-            }
-        });
-    };
-
-
-    this.findByProximityZero = function(req, res){
-        var userId = req.params.userId;
-        Model.findByProximityZero(userId, function(err, models){
-            if(err){
-
-            }
-            else if(!models){
-
-            }
-            else{
-
-            }
-        });
-    };
-
-    this.findByProximityFirst = function(req, res){
-        var userId = req.params.userId;
-        Model.findByProximityFirst(userId, function(err, models){
-            if(err){
-
-            }
-            else if(!models){
-
-            }
-            else{
-
-            }
-        });
-    };
-
-    this.findByProximitySecond = function(req, res){
-        var userId = req.params.userId;
-        Model.findByProximitySecond(userId, function(err, models){
-            if(err){
-
-            }
-            else if(!models){
-
-            }
-            else{
-
-            }
-        });
-    };
-
-    this.findByProximityThird = function(req, res){
-        var userId = req.params.userId;
-        Model.findByProximityThird(userId, function(err, models){
-            if(err){
-
-            }
-            else if(!models){
-
-            }
-            else{
-
-            }
-        });
-    };
-
-
-    this.findMyProximity = function(req, res){
-        var userId = req.user._id;
-        Model.findById(userId, function(err, model){
-            if(err){
-
-            }
-            else if(!model){
-
-            }
-            else{
-
-            }
-        });
-    };
-
-    this.findMyProximityZero = function(req, res){
-        var userId = req.user._id;
-        Model.findByProximityZero(userId, function(err, models){
-            if(err){
-
-            }
-            else if(!models){
-
-            }
-            else{
-
-            }
-        });
-    };
-
-    this.findMyProximityFirst = function(req, res){
-        var userId = req.user._id;
-        Model.findByProximityFirst(userId, function(err, models){
-            if(err){
-
-            }
-            else if(!models){
-
-            }
-            else{
-
-            }
-        });
-    };
-
-    this.findMyProximitySecond = function(req, res){
-        var userId = req.user._id;
-        Model.findByProximitySecond(userId, function(err, models){
-            if(err){
-
-            }
-            else if(!models){
-
-            }
-            else{
-
-            }
-        });
-    };
-
-    this.findMyProximityThird = function(req, res){
-        var userId = req.user._id;
-        Model.findByProximityThird(userId, function(err, models){
-            if(err){
-
-            }
-            else if(!models){
-
-            }
-            else{
-
-            }
-        });
-    };
-
-
-    this.findSelectedProximity = function(req, res){
-        var userId = req.params.userId;
-        Model.findById(userId, function(err, model){
-            if(err){
-
-            }
-            else if(!model){
-
-            }
-            else{
-
-            }
-        });
-    };
-
-    this.findSelectedProximityZero = function(req, res){
-        var userId = req.params.userId;
-        Model.findByProximityZero(userId, function(err, models){
-            if(err){
-
-            }
-            else if(!models){
-
-            }
-            else{
-
-            }
-        });
-    };
-
-    this.findSelectedProximityFirst = function(req, res){
-        var userId = req.params.userId;
-        Model.findByProximityFirst(userId, function(err, models){
-            if(err){
-
-            }
-            else if(!models){
-
-            }
-            else{
-
-            }
-        });
-    };
-
-    this.findSelectedProximitySecond = function(req, res){
-        var userId = req.params.userId;
-        Model.findByProximitySecond(userId, function(err, models){
-            if(err){
-
-            }
-            else if(!models){
-
-            }
-            else{
-
-            }
-        });
-    };
-
-    this.findSelectedProximityThird = function(req, res){
-        var userId = req.params.userId;
-        Model.findByProximityThird(userId, function(err, models){
-            if(err){
-
-            }
-            else if(!models){
-
-            }
-            else{
-
-            }
-        });
-    };
-
-
-
-    this.findAllProximity = function(req, res){
-        var userId = req.params.userId;
-        Model.findById(userId, function(err, model){
-            if(err){
-
-            }
-            else if(!model){
-
-            }
-            else{
-
-            }
-        });
-    };
-
-    this.findAllProximityZero = function(req, res){
-        var userId = req.params.userId;
-        Model.findByProximityZero(userId, function(err, models){
-            if(err){
-
-            }
-            else if(!models){
-
-            }
-            else{
-
-            }
-        });
-    };
-
-    this.findAllProximityFirst = function(req, res){
-        var userId = req.params.userId;
-        Model.findByProximityFirst(userId, function(err, models){
-            if(err){
-
-            }
-            else if(!models){
-
-            }
-            else{
-
-            }
-        });
-    };
-
-    this.findAllProximitySecond = function(req, res){
-        var userId = req.params.userId;
-        Model.findByProximitySecond(userId, function(err, models){
-            if(err){
-
-            }
-            else if(!models){
-
-            }
-            else{
-
-            }
-        });
-    };
-
-    this.findAllProximityThird = function(req, res){
-        var userId = req.params.userId;
-        Model.findByProximityThird(userId, function(err, models){
-            if(err){
-
-            }
-            else if(!models){
-
-            }
-            else{
-
-            }
-        });
-    };
 
 
     this.create = function(req, res){
-        var model = req.body;
-        model.userId = req.user._id;
-        model = new Model(model);
-        model.create(function(err, model){
-            if(err){
-
-            }
-            else if(!model){
-
-            }
-            else{
-
-            }
+        this.request = req;
+        this.response = res;
+        var model = new Model(req.body);
+        model.create().then(function(model){
+            var response = composeResponse(model, modelNamespace, "create", 200);
+            respond(response);
+        }).catch(function(err){
+            var response = composeResponse(err, modelNamespace, "create", 500);
+            respond(response);
         });
     };
 
 
     this.update = function(req, res){
-        var modelId = req.params.modelId;
-        var model = {
-            userId:req.user._id,
-            length:req.body.length,
-            src:req.body.src,
-            coverImage:req.body.coverImage,
-            description:req.body.description,
-            title:req.body.title,
-            accessType:req.body.title
-        };
-        Model.findOneAndUpdate(modelId, model, function(err, model){
-            if(err){
-
-            }
-            else if(!model){
-
-            }
-            else{
-
-            }
+        var newModel = req.body;
+        this.request = req;
+        this.response = res;
+        Model.findByIdAndUpdate(newModel._id, newModel).then(function(oldModel){
+            model = {old_val:oldModel, new_val:newModel};
+            var response = composeResponse(model, modelNamespace, "update", 200);
+            respond(response);
+        }).catch(function(err){
+            var response = composeResponse(err, modelNamespace, "update", 500);
+            respond(response);
         });
     };
 
 
     this.delete = function(req, res){
         var modelId = req.params.modelId;
-        Model.remove(modelId, function(err, response){
-            if(err){
-
-            }
-            else{
-
-            }
+        this.request = req;
+        this.response = res;
+        Model.remove(modelId).then(function(model){
+            var response = composeResponse(model, modelNamespace, "delete", 200);
+            respond(response);
+        }).catch(function(err){
+            var response = composeResponse(err, modelNamespace, "delete", 500);
+            respond(response);
         });
     };
-
-
-
-    play = function(req, res){
-
-        return null;
-    };
-
-
-    pause = function(req, res){
-        return null;
-    };
-
-
-    stop = function(req, res){
-        return null;
-    };
-
-
-    resumeAt = function(req, res){
-        return null;
-    };
+    
     return this;
-}
+
+};
+
 

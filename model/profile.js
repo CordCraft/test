@@ -7,7 +7,6 @@
 var mongoose = require('mongoose');
 var Type = require('mongoose-easy-types').Types;
 
-
 var profileSchema = mongoose.Schema({
     time: Type.date.future(),
     info: {
@@ -27,6 +26,20 @@ profileSchema.virtual("userId").get(function(){
 
 
 
+profileSchema.statics.onAuthenticationCreationStarted = function(){
+    
+    
+};
+
+
+profileSchema.statics.onAuthenticationCreationCompleted = function(){
+    //what to do on
+};
+
+
+var FunctionCreatePlugin = require('../bin/plugin/fn-create-plugin').NoAuth;
+profileSchema.plugin(FunctionCreatePlugin);
+//profileSchema.plugin(AuthCreationListenerPlugin);
 var Profile = mongoose.model("Profile", profileSchema);
 
 module.exports = Profile;

@@ -7,6 +7,8 @@
 
 var FindByUserIdPlugin = function(schema, option){
     
+    
+    
     schema.statics.findByUserId = function(conditions){
         if(this.modelName === "Profile"){
             return this.findById(conditions.userId);

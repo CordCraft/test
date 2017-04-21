@@ -17,11 +17,13 @@ var contactSchema = mongoose.Schema({
     },
     countryCode:String,
     mobile:String,
-    email:String,
-    website:String
+    email:String
 });
 
 
+
+var FunctionCreatePlugin = require('../bin/plugin/fn-create-plugin').NoAuth;
+audioSchema.plugin(FunctionCreatePlugin);
 var Contact = mongoose.model("Contact", contactSchema);
 
 

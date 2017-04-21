@@ -21,8 +21,7 @@ var InstagramStrategy = require('passport-instagram');
 
 
 var Authentication = require('../model/authentication');
-var AccessToken = require('../model/accessToken');
-var Developer = require('../model/developer');
+var App = require('../model/app');
 var Admin = require('../model/admin');
 
 
@@ -68,7 +67,7 @@ authApp.set('validateAllCredentials', validateAppCredentials, validateAuthCreden
 
 
 authApp.get('/', getHere);
-authApp.post('/devSignup', signupDeveloper);
+authApp.post('/devSignup', signupApp);
 authApp.post('/login', passport.authenticate('local', {session:false}),respond);
 authApp.get('/logout', logout);
 
@@ -161,12 +160,12 @@ function login(req, username, password, done){
 };
 
 function validateAppCredentials(req, res, next){
-    var developer = {};
-    developer.appKey = req.headers.app_key;
-    developer.appSecret = req.headers.app_secret;
-    if(!(developer.appKey && developer.appSecret)){
+    var app = {};
+    app.appKey = req.headers.app_key;
+    app.appSecret = req.headers.app_secret;
+    if(!(app.appKey && app.appSecret)){
         var response = {
-            action:'developer authentication',
+            action:'app authentication',
             status:'failed',
             type:401,
             reason: 'appKey and/or appSecret cannot be empty'
@@ -175,11 +174,11 @@ function validateAppCredentials(req, res, next){
         return false;
     }
     else{
-        Developer.findByKeyAndSecret(developer.appKey, developer.appSecret, 
-        function(err, developer){
+        App.findByKeyAndSecret(app.appKey, app.appSecret, 
+        function(err, app){
             if(err){
                 var response = {
-                    action: 'developer authentication',
+                    action: 'app authentication',
                     status: 'failed',
                     type: 401,
                     reason: err
@@ -187,9 +186,9 @@ function validateAppCredentials(req, res, next){
                 res.status(401).json(response);
                 return false;
             }
-            else if(!developer){
+            else if(!app){
                 var response = {
-                    action: 'developer authentication',
+                    action: 'app authentication',
                     status: 'failed',
                     type: 401,
                     reason: 'wrong appKey and/or appSecret'
@@ -198,7 +197,7 @@ function validateAppCredentials(req, res, next){
                 return false;
             }
             else{
-                req.developer = developer;
+                req.app = app;
                 return next();
             }
         });
@@ -357,7 +356,7 @@ exports.validateAccess = function(req, res){
         case access.JAWAD: validateJawadAccess(req, res); break;
         case access.ADMIN: validateAdminAccess(req, res); break;
         case access.EDITOR: validateEditorAccess(req, res); break;
-        case access.DEVELOPER: validateDeveloperAccess(req,res); break;
+        case access.DEVELOPER: validateAppAccess(req,res); break;
         case access.NETWORK: validateNetworkAccss(req, res); break;
         case access.MEET: validateMeetAccess(req, res); break;
         case access.PROXIMITY_0: validateProximityZeroAccess(req, res); break;
@@ -429,43 +428,43 @@ exports.classifyAccessor = function(userId, accessorId, callback){
 };
 
 
-function signupDeveloper(req, res){
-    var developerInit = {};
-    developerInit.appName = req.body.appName;
-    developerInit.accessType = req.body.accessType;
-    if(!(developerInit.appName && developerInit.accessType)){
+function signupApp(req, res){
+    var appInit = {};
+    appInit.appName = req.body.appName;
+    appInit.accessType = req.body.accessType;
+    if(!(appInit.appName && appInit.accessType)){
         var response = {
-            action:'developer signup',
+            action:'app signup',
             status:'failed',
             reason:"appName and/or accessType cannot be empty"
         };
         res.status(400).json(response);
     }
     else{
-        var developer = new Developer(developerInit);
-        developer.genAndSave(function(err, developer){
+        var app = new App(appInit);
+        app.genAndSave(function(err, app){
                 if(err) {
                     var response = {
-                        action:'developer signup',
+                        action:'app signup',
                         status:'failed',
                         reason: err
                     };
                     res.status(400).json(response);
                 }
-                else if(!developer){
+                else if(!app){
                     var response = {
                         action:'develooper signup',
                         status:'failed',
-                        reason:'developer empty'
+                        reason:'app empty'
                     };
                     res.status(400).json(response);
                 }
                 else{
                     var response = {
-                        action:'developer signup',
+                        action:'app signup',
                         status:'success',
-                        data: developer,
-                        dataType: 'developer'
+                        data: app,
+                        dataType: 'app'
                     };
                     res.status(200).json(response);
                 }

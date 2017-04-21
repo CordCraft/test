@@ -19,7 +19,7 @@ function updateLog(action, schema){
                 modelId: objectId
             }
         }
-    }
+    };
 };
 
 

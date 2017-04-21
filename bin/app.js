@@ -7,44 +7,28 @@
 
 
 var express = require('express');
-var app = express();
+var app = express.Router({mergeParams:true});
 
 var apis = [
-    "/audio",
+    "/app",
     "/authentication",
-    "/basic",
-    "/call", 
-    "/chat",
-    "/developer",
-    "/device",
-    "/education",
-    "/employment",
     "/error",
-    "/faceRecognition",
-    "/flowAnalysis",
-    "/geoSuccess",
-    "/image",
     "/interest",
-    "/linearSuccess",
     "/log",
-    "/network",
     "/notification",
     "/order",
     "/profile",
-    "/proximity",
-    "/proximityStream",
-    "/quote",
-    "/search",
-    "/skill",
-    "/video"
+    "/search"
 ];
 
 for(var i = 0; i < apis.length; i++){
     var api = apis[i];
     console.log(api+"\n");
+    
     var apiApp = require("./api")(api);
     app.use("/:userId"+api, setUserId, apiApp);
 }
+
 app.use("/:userId", function(req, res){
    res.send(req.params.userId); 
 });

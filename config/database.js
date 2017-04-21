@@ -4,17 +4,11 @@
  * and open the template in the editor.
  */
 
-var auth = {
-    username:"jawadprox",
-    password:"mabintoujalloh123#"
-};
-
 var config = {
-    secret: "loveIsStupid",
+    secret: "ddfaefjfaepoefioeihefdga",
     local:"mongodb://127.0.0.1:27017/main",
-    cloud:"mongodb://"+auth.username+":"+auth.password+"@mity0-shard-00-00-6vodj.mongodb.net:27017,mity0-shard-00-01-6vodj.mongodb.net:27017,mity0-shard-00-02-6vodj.mongodb.net:27017/<DATABASE>?ssl=true&replicaSet=mity0-shard-0&authSource=admin",
-    localTest:"mongodb://127.0.0.1:27017/test",
-    cloudTest:"mongodb://"+auth.username+":"+auth.password+"@mity0-shard-00-00-6vodj.mongodb.net:27017,mity0-shard-00-01-6vodj.mongodb.net:27017,mity0-shard-00-02-6vodj.mongodb.net:27017/<DATABASE>?ssl=true&replicaSet=mity0-shard-0&authSource=admin"
+    cloud:"mongodb://abiolaonikoyi:Cordcraft1*@cluster0-shard-00-00-dn8v9.mongodb.net:27017,cluster0-shard-00-01-dn8v9.mongodb.net:27017,cluster0-shard-00-02-dn8v9.mongodb.net:27017/<DATABASE>?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin",
+    localTest:"mongodb://127.0.0.1:27017/test"
 };
 
 module.exports = config;

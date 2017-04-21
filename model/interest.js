@@ -104,7 +104,8 @@ interestSchema.statics.findByProximity = function(userId, callback){
 };
 
 
-
+var FunctionCreatePlugin = require('../bin/plugin/fn-create-plugin').NoAuth;
+interestSchema.plugin(FunctionCreatePlugin);
 var Interest = mongoose.model("Interest", interestSchema);
 
 module.exports = Interest;

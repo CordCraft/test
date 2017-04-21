@@ -6,12 +6,15 @@
 var express = require('express');
   
 module.exports = function(modelNamespace){
-    var modelApp = express(); 
+    var modelApp = express.Router({mergeParams:true}); 
     var modelCtrl = new require('../bin/controller')(modelNamespace);
 
 
 
     modelApp.get('/', modelCtrl.findAllByUserId);
+    
+    
+    modelApp.get('/all', modelCtrl.findAll);
     
     
     modelApp.get('/proximity0', modelCtrl.proximity0);
@@ -36,7 +39,19 @@ module.exports = function(modelNamespace){
 
 
     modelApp.post('/', modelCtrl.create);
+    
+    
+    modelApp.put('/', modelCtrl.update);
+    
+    
+    /*modelApp.post('/upStream', modelCtrl.upStream);
 
+
+    modelApp.post('/downStream', modelCtrl.downStream);
+
+
+    modelApp.post('/upload', modelCtrl.upload);
+    
 
     modelApp.put('/play()', modelCtrl.update);
 
@@ -47,7 +62,7 @@ module.exports = function(modelNamespace){
     modelApp.put('/resumeAt(/:time)', modelCtrl.update);
 
 
-    modelApp.put('/stop()', modelCtrl.update);
+    modelApp.put('/stop()', modelCtrl.update);8*/
 
 
     modelApp.put('/:modelId', modelCtrl.update);

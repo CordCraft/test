@@ -8,26 +8,288 @@ and open the template in the editor.
     <head>
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
-        <script src="./socket.io.js"></script>
-        <script src="./jquery.js"></script>
+        <script src="./javascripts/vendor/socket.io.js"></script>
+        <script src="./javascripts/vendor/jquery.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
+        
         <script>
-            var socket = io("http://localhost:8080");
-            socket.on("connect", function(){
-                alert("connection made");
-                socket.emit("initialise", {token:"500"});
-            });
-            socket.on("granted", function(data){
-                if(data){
-                    audio = io.of("/audio");
-                    audio.join("500");
-                    .emit("message", "whatsup");
-                }
-            });
-            socket.on("")
+            Mity = function(configuration){
+                this.config = configuration;
+                return this;
+            };
+            
+            
+            Mity.prototype.getRoot = function(){
+                return "http://localhost:8080";
+            };
+            
+            
+            Mity.prototype.get = function(path){
+                this.method = "GET";
+                this.path = path;
+                return this;
+            };
+            
+            
+            
+            Mity.prototype.post = function(path){
+                this.method = "POST";
+                this.path = path;
+                return this;
+            };
+            
+            
+            
+            Mity.prototype.put = function(){
+                this.method = "PUT";
+                this.path = path;
+                return this;
+            };
+            
+            
+            
+            Mity.prototype.delete = function(){
+                this.method = "DELETE";
+                this.path = path;
+                return this;
+            };
+            
+            Mity.prototype.setUserId = function(userId){
+                this.userId = userId;
+                return this;
+            };
+            
+            Mity.prototype.body = function(body){
+                this.body = body;
+                return this;
+            };
+            
+            Mity.prototype.params = function(params){
+                this.params = params;
+                return this;
+            };
+            
+            Mity.prototype.query = function(query){
+                this.query = query;
+                return this;
+            };
+            
+            
+            
+            Mity.prototype.load = function(callback){
+                var PATH = "/api/"+this.userId+"/"+this.path;
+                var $xHttp = new XMLHttpRequest();
+                $xHttp.onload = function(){
+                    if($xHttp.readyState === 4){
+                        callback($xHttp.responseText);
+                    };
+                }; 
+                $xHttp.open(this.method, PATH, true);
+                //xHttp.header(this.config); set head.
+                $xHttp.send(this.body||this.params||this.query);
+            };
+            
+            
+            function a(method, userId, path, cbEvent){
+                var firstSlash = path.indexOf("/");
+                var nextChar = firstSlash+1;
+                var prefix = method+" /"+userId+"/"+path+"/"+genUID();
+                return {
+                    prefix: prefix,
+                    modelName: path.substring(0, firstSlash),
+                    reqEvent: method+":/"+ (!firstSlash?"":path.substring(nextChar)),
+                    resEvent: prefix+cbEvent
+                };
+            };
+            
+            
+            function genUID(){
+                function s4(){
+                    return Math.floor((1 + Math.random()) * 0x1000)
+                            .toString(16)
+                            .substring(1);
+                };
+                return s4() + s4() + "-" + s4() + "-" + s4() + "-" + s4()+s4()+s4();
+            }
+            
+            function getPrefix(event, uid){
+                return event+uid+"/";
+            }
+            
+            function getNamespace(root, modelName){
+                return root+"/"+modelName;
+            }
+            
+            
+            Mity.prototype.on = function(cbEvent, callback){
+                var path = a(this.method, this.userId, this.path, cbEvent);
+                var socket = io(getNamespace(this.getRoot(), path.modelName));
+                var userId = this.userId;
+                socket.on("connect", function(){
+                    socket.emit(path.reqEvent, {prefix: path.prefix, action:false, header:this.header, body:this.body||this.params||this.query});
+                    socket.on(path.resEvent, function(data){
+                        if(data.err) callback(data, null);
+                        else callback(null, data);
+                    });
+                });
+            };
+            
+            
+            Mity.prototype.loadOn = function(cbEvent, callback){
+                var path = a(this.method,this.userId, this.path, cbEvent);
+                var socket = io(getNamespace(this.getRoot(), path.modelName));
+                var userId = this.userId;
+                socket.on("connect", function(){
+                    socket.emit(path.reqEvent, {
+                        prefix: path.prefix, 
+                        action:true,
+                        header:this.header,
+                        conditions:{userId:userId},
+                        body:this.body||this.params||this.query
+                    });
+                    socket.on(path.resEvent, function(data){
+                        if(data.err) callback(data, null);
+                        else callback(null, data);
+                    });
+                });
+            };
+            
+            
+            Mity.prototype.one = function(cbEvent, callback){
+                var path = a(this.method, this.path, cbEvent);
+                var modelName = path.modelName;
+                this.socket = io(getNamespace(this.getRoot(), modelName));
+                var userId = this.userId;
+                socket.on("connect", function(){
+                    socket.emit(path.reqEvent, {prefix: path.prefix, action:false, header:this.header, body:this.body||this.params||this.query});
+                    socket.on(path.resEvent, function(data){
+                        socket.disconnect();
+                        if(data.err) callback(data, null);
+                        else callback(null, data);
+                    });
+                });
+            };
+            
+            
+            Mity.prototype.loadOne = function(cbEvent, callback){
+                var path = a(this.method, this.path, cbEvent);
+                var modelName = path.modelName;
+                this.socket = io(getNamespace(this.getRoot(), modelName));
+                var userId = this.userId;
+                this.socket.on("connect", function(){
+                    this.socket.emit(path.reqEvent, {
+                        prefix: path.prefix, 
+                        action:true, 
+                        header:this.header,
+                        conditions:{userId:userId},
+                        body:this.body||this.params||this.query
+                    });
+                    this.socket.on(path.resEvent, function(data){
+                        this.socket.disconnect();
+                        if(data.err) callback(data, null);
+                        else callback(null, data);
+                    });
+                });
+            };
+            
+            
+            Mity.prototype.disconnect = function(){
+                this.socket.disconnect();
+                return this;
+            };
+            
+            
+            Mity.prototype.startPipeLineIniteraction = function(){
+                PATH = "/api/"+this.userId+"/"+this.path;
+                var $xHttp = new XMLHttpRequest();
+                $xHttp.onload = function(){
+                    if($xHttp.readyState === 4){
+                        callback($xHttp.responseText);
+                    };
+                }; 
+                $xHttp.open(this.method, PATH, true);
+                //xHttp.header(this.config); set head.
+                $xHttp.send(this.body||this.params||this.query);
+            }
+            
         </script>
+        <div>TODO write content</div>
+        <button onclick="f2('profile'); f2('proximity'); f2('audio');">BUTTON 1</button>
+        <button onclick="f2('profile/all');">BUTTON 2</button>
+        <button onclick="f2('audio');">BUTTON 3</button>
+        <button onclick="f1('profile')">PROFILE</button>
+        <button onclick="f1('audio')">AUDIO</button>
+        <button onclick="f1('proximity')">PROXIMITY</button>
+        <button onclick="f1('proximity'); f1('audio'); f1('profile')">ALL</button>
+        <div id='container'>
+            <p id="result" style="color:blue"></p>
+            <p id='firstName' style="color:burlywood; font-size:60px"></p>
+            <img id='image' src=''/>
+            <img id='image1' src='' style='width:100px'/>
+        </div>
+        
+        <script>
+            function f1(model){
+                var yMity = new Mity();
+                yMity.setUserId("58f4b8d5a4e6eb105486fa67");
+                yMity.get(model).load(function(data){
+                    
+                    if(model === "proximity") {
+                        result = "#result";
+                    }
+                    else if(model === "profile") {
+                        result = "#result1";
+                    }
+                    else {
+                        result = "#result2";
+                    }
+                    $(result).text(JSON.stringify(data));
+                });
+                console.log(yMity);
+            }
+            
+            
+            function f2(model){
+                var yMity = new Mity();
+                yMity.setUserId("58f4b8d5a4e6eb105486fa67");
+                yMity.get(model).loadOn("success", function(err, data){
+                    if(model === "proximity") {
+                        result = "#result";
+                    }
+                    else if(model === "profile") {
+                        result = "#result1";
+                    }
+                    else {
+                        result = "#result2";
+                    }
+                    $(result).text(JSON.stringify(data));
+                    data.value.forEach(function(value){
+                        var a = $("<h2>").html(value.info.firstName);
+                        var b = $("<img>").attr("src", value.media.profileImage).css({width:"200px"});
+                        $("#container").append(a).append(b);
+                    });
+                    
+                    $("#image").attr("src", data.value.media.coverImage);
+                    $("#image1").attr("src", data.value.media.profileImage);
+                });
+                console.log(yMity);
+            }
+        </script>
+        
+        
+        <div>
+            <p id="result1" style='color:red'></p>
+        </div>
+        
+        
+        
+        
+        <div>
+            <p id="result2" style="color: green"></p>
+        </div>
+        
+        
     </body>
 </html>

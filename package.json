@@ -1,5 +1,5 @@
 {
-    "name": "mity",
+    "name": "Cordcraft",
     "version": "0.0.0",
     "private": true,
     "scripts": {
@@ -16,6 +16,8 @@
         "express": "~4.13.4",
         "rand-token":"",
         "mongoose":"",
+        "stripe":"",
+        "nodemailer":"",
         "mongoose-easy-types":"",
         "mongoose-paginater":"",
         "mongoosastic":"",
@@ -25,8 +27,8 @@
         "morgan": "~1.7.0",
         "serve-favicon": "~2.3.0",
         "socket.io":"",
-        "socket.io-client":"",
-        "socket.io-emitter":"",
+        "socket.io-file":"",
+        "socket.io-stream":"",
         "jsonwebtoken":"",
         "passport":"",
         "passport-local":"",

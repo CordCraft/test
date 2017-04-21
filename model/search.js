@@ -11,24 +11,12 @@ var mongoosastic = require('mongoosastic');
 
 var searchSchema = mongoose.Schema({
     userId:{type:String, unique:true},
-    queries:[{
-        query:{type:Object, es_indexed:true},
-        auto:{type:Boolean, default:false},
-        alert:{type:Boolean, default:false},
-        found:{type:Boolean, default:true},
-        zero:{type:Boolean, default:false},
-        first:{type:Boolean, default:true},
-        second:{type:Boolean, default:true},
-        third:{type:Boolean, default:true},
-        time:{type:Date, default:Date.now()}
-    }]
+    query:Object
 });
 
-
-var conditions = null;
-
-
 searchSchema.plugin(mongoosastic);
+var FunctionCreatePlugin = require('../bin/plugin/fn-create-plugin').NoAuth;
+searchSchema.plugin(FunctionCreatePlugin);
 
 var Search = mongoose.model("Search", searchSchema);
 

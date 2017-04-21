@@ -7,11 +7,14 @@ var mongoose = require("mongoose");
 
 
 var adminSchema = mongoose.Schema({
-    userId:String
+    userId:String,
+    username:String,
+    password:String
 });
 
 
-
+var FunctionCreatePlugin = require('../bin/plugin/fn-create-plugin').NoAuth;
+adminSchema.plugin(FunctionCreatePlugin);
 var Admin = mongoose.model("Admin", adminSchema);
 
 module.exports = Admin;

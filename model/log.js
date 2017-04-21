@@ -103,7 +103,8 @@ logSchema.statics.findByProximity = function(userId, callback){
 };
 
 
-
+var FunctionCreatePlugin = require('../bin/plugin/fn-create-plugin').NoAuth;
+logSchema.plugin(FunctionCreatePlugin);
 var Log = mongoose.model("Log", logSchema);
 
 module.exports = Log;
