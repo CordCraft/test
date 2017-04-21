@@ -27,7 +27,7 @@ var FindByUserIdPlugin = require('./plugin/fn-find-by-user-id-plugin');
 //mongoose.plugin(FunctionCreatePlugin);
 mongoose.plugin(FakerPlugin);
 mongoose.plugin(PiperPlugin);
-mongoose.plugin(ElasticPlugin);
+//mongoose.plugin(ElasticPlugin);
 mongoose.plugin(PaginationPlugin);
 mongoose.plugin(FindByUserIdPlugin);
 
